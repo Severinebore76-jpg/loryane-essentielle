@@ -1,0 +1,32 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello ProduitController!{% endblock %}
+
+{% block body %}
+    <h1>Catalogue produits</h1>
+
+    {% for produit in produits %}
+        <div style="border:1px solid #ccc; padding:10px; margin:10px;">
+            {% if produit.image %}
+                <img src="/uploads/{{ produit.image }}" width="150">
+            {% endif %}
+            <h2>{{ produit.nom }}</h2>
+            <p>{{ produit.description }}</p>
+            <p><strong>{{ produit.prix }} €</strong></p>
+            <p>Stock : {{ produit.stock }}</p>
+            <p>Catégorie : {{ produit.categorie.nom }}</p>
+
+            <a href="{{ path('produit_edit', {id: produit.id}) }}">
+                Modifier
+            </a>
+            <form method="post" action="{{ path('produit_delete', {id: produit.id}) }}" style="display:inline;">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ produit.id) }}">
+                <button onclick="return confirm('Supprimer ce produit ?')">
+                    Supprimer
+                </button>
+            </form>
+        </div>
+    {% else %}
+        <p>Aucun produit trouvé</p>
+    {% endfor %}
+{% endblock %}
