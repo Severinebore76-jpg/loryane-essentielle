@@ -123,4 +123,11 @@ final class ProduitController extends AbstractController
 
         return $this->redirectToRoute('app_produits');
     }
+    #[Route('/produit/{id}', name: 'produit_show', methods: ['GET'])]
+    public function show(Produit $produit): Response
+    {
+        return $this->render('produit/show.html.twig', [
+            'produit' => $produit,
+        ]);
+    }
 }
