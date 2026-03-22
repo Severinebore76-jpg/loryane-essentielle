@@ -1,0 +1,62 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Catalogue produits{% endblock %}
+
+{% block body %}
+    <h1>Catalogue produits</h1>
+    <h2>Filtrer la catégorie</h2>
+    <ul>
+        <li>
+            <a href="{{ path('app_produits') }}">Toutes</a>
+        </li>
+        {% for categorie in categories %}
+        <li>
+            <a href="{{ path('app_produits', {categorie: categorie.id}) }}">
+                {{ categorie.nom }}
+            </a>
+        </li>
+        {% endfor %}
+    </ul>
+
+    {% for produit in produits %}
+        <div style="border:1px solid #ccc; padding:10px; margin:10px; width:250px; display:inline-block; vertical-align:top;">
+
+            <a href="{{ path('produit_show', {
+                id: produit.id,
+                categorie: app.request('categorie')
+            }) }}">
+                <img
+                    src="{{ produit.image
+                    ? asset('uploads/' ~ produit.image)
+                    : asset('images/default.jpg') }}"
+                    width="100%"
+                    style="height:150px; object-fit:cover;"
+                    onerror="this.src='{{ asset('images/default.jpg') }}'">
+            </a>
+
+            <h2>
+                <a href="{{ path('produit_show', {id: produit.id}) }}">{{ produit.nom }}
+                </a>
+            </h2>
+
+            <p style="font-size:14px;">{{ produit.description|slice(0, 80) }}...</p>
+
+            <p><strong>{{ produit.prix }} €</strong></p>
+
+            <p>Stock : {{ produit.stock }}</p>
+
+            <p style="font-size:12px; color:#666;">{{ produit.categorie.nom }}</p>
+
+            <a href="{{ path('produit_edit', {id: produit.id}) }}">Modifier</a>
+
+            <form method="post" action="{{ path('produit_delete', {id: produit.id}) }}" style="display:inline;">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ produit.id) }}">
+                <button onclick="return confirm('Supprimer ce produit ?')">
+                    Supprimer
+                </button>
+            </form>
+        </div>
+    {% else %}
+        <p>Aucun produit trouvé</p>
+    {% endfor %}
+{% endblock %}

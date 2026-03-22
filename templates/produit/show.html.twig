@@ -1,0 +1,26 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ produit.nom }}{% endblock %}
+
+{% block body %}
+    <h1>{{ produit.nom }}</h1>
+
+    <img
+        src="{{ asset('uploads/' ~ produit.image) }}"
+        alt="{{ produit.nom }}"
+        style="width:300px; object-fit:cover;"
+        onerror="this.src='{{ asset('images/default.jpg') }}'"
+    >
+
+    <p>{{ produit.description }}</p>
+
+    <p><strong>{{ produit.prix }} €</strong></p>
+
+    <p>Stock : {{ produit.stock }}</p>
+
+    <p>Catégorie : {{ produit.categorie.nom }}</p>
+
+    <a href="{{ path('app_produits', {
+        categorie: categorie
+    }) }}">← Retour</a>
+{% endblock %}
