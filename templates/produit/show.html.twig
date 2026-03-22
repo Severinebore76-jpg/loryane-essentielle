@@ -20,5 +20,7 @@
 
     <p>Catégorie : {{ produit.categorie.nom }}</p>
 
-    <a href="{{ path('app_produits') }}">← Retour</a>
+    <a href="{{ path('app_produits', {
+        categorie: categorie
+    }) }}">← Retour</a>
 {% endblock %}
