@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\AdresseRepository;
+use App\Entity\Utilisateur;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: AdresseRepository::class)]
@@ -107,4 +108,17 @@ class Adresse
 
         return $this;
     }
+    #[ORM\ManyToOne(targetEntity: Utilisateur::class, inversedBy: 'adresses')]
+    private ?Utilisateur $utilisateur = null;
+
+    public function getUtilisateur(): ?Utilisateur
+    {
+        return $this->utilisateur;
+    }
+    public function setUtilisateur(?Utilisateur $utilisateur): static
+    {
+        $this->utilisateur = $utilisateur;
+        return $this;
+    }
+
 }
