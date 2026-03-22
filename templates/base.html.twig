@@ -12,6 +12,17 @@
         {% endblock %}
     </head>
     <body>
+    <div style="padding:10px; background:#eee;">
+
+        {% if app.user %}
+            Connecté : {{ app.user.userIdentifier }}
+            |
+            <a href="{{ path('app_logout') }}">Se déconnecter</a>
+        {% else %}
+            <a href="{{ path('app_login') }}">Se connecter</a>
+        {% endif %}
+
+    </div>
         {% for label, messages in app.flashes %}
             {% for message in messages %}
                 <div style="padding:10px; margin:10px; border:1px solid red; color:red;">
