@@ -16,11 +16,14 @@
 
         <form method="post">
 
-            <label>Email</label><br>
-            <input type="email" name="_username" value="{{ last_username }}" required><br><br>
+            <label for="email">Email</label><br>
+            <input type="email" id="email" name="_username" value="{{ last_username }}" required><br><br>
 
-            <label>Mot de passe</label><br>
-            <input type="password" name="_password" required><br><br>
+            <label for="password">Mot de passe</label><br>
+            <input type="password" id="password" name="_password" required><br><br>
+
+            <input type="hidden" name="_csrf_token"
+                   value="{{ csrf_token('authenticate') }}">
 
             <button type="submit">Se connecter</button>
 
