@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\Utilisateur;
 use App\Entity\Adresse;
 use App\Form\AdresseType;
 use Doctrine\ORM\EntityManagerInterface;
@@ -15,6 +16,7 @@ class AdresseController extends AbstractController
     #[Route('/adresse', name: 'app_adresse')]
     public function index(): Response
     {
+        /** @var Utilisateur $user */
         $user = $this->getUser();
 
         return $this->render('adresse/index.html.twig', [
