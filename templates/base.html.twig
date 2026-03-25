@@ -12,17 +12,26 @@
         {% endblock %}
     </head>
     <body>
-    <div style="padding:10px; background:#eee;">
-
-        {% if app.user %}
-            Connecté : {{ app.user.userIdentifier }}
-            |
-            <a href="{{ path('app_logout') }}">Se déconnecter</a>
-        {% else %}
-            <a href="{{ path('app_login') }}">Se connecter</a>
-        {% endif %}
-
-    </div>
+        {# HEADER NAVIGATION #}
+        <header style="padding:10px; background:#ddd;">
+            <nav>
+                <a href="{{ path('app_home') }}">Accueil</a> |
+                <a href="{{ path('app_produits') }}">Catalogue</a> |
+                <a href="{{ path('app_adresse') }}">Mes adresses</a> |
+                <a href="{{ path('app_profil') }}">Mon compte</a>
+            </nav>
+        </header>
+        {# BLOC AUTH #}
+        <div style="padding:10px; background:#eee;">
+            {% if app.user %}
+                Connecté : {{ app.user.userIdentifier }}
+                |
+                <a href="{{ path('app_logout') }}">Se déconnecter</a>
+            {% else %}
+                <a href="{{ path('app_login') }}">Se connecter</a>
+            {% endif %}
+        </div>
+        {# FLASH MESSAGES #}
         {% for label, messages in app.flashes %}
             {% for message in messages %}
                 <div style="padding:10px; margin:10px; border:1px solid red; color:red;">
@@ -33,7 +42,7 @@
                 <div style="color:green;">{{ message }}</div>
             {% endfor %}
         {% endfor %}
-
+        {# CONTENU #}
         {% block body %}{% endblock %}
     </body>
 </html>

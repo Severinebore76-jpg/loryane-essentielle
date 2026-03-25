@@ -14,8 +14,7 @@ class SecurityController extends AbstractController
     {
         // Si déjà connecté → redirection
         if ($this->getUser()) {
-            return $this->redirectToRoute('app_adresse');
-        }
+            return $this->redirectToRoute('app_home');        }
         // Gestion erreur + dernier username
             $error = $authenticationUtils->getLastAuthenticationError();
             $lastUsername = $authenticationUtils->getLastUsername();
