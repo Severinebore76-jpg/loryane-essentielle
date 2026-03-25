@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mes adresses{% endblock %}
+
+{% block body %}
+
+    <h1>Mes adresses</h1>
+
+    <a href="{{ path('app_adresse_new') }}">Ajouter une adresse</a>
+
+    {% for adresse in adresses %}
+        <div style="margin-top:20px;">
+            <p>
+                {{ adresse.prenom|capitalize }} {{ adresse.nom|upper }}<br>
+                {{ adresse.numero }} {{ adresse.typeVoie }} {{ adresse.nomVoie }}<br>
+                {{ adresse.codePostal }} {{ adresse.ville }}<br>
+                {{ adresse.pays }}<br>
+            </p>
+
+            <a href="{{ path('app_adresse_edit', {id: adresse.id}) }}">Modifier</a>
+
+            <form method="post" action="{{ path('app_adresse_delete', {id: adresse.id}) }}">
+                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ adresse.id) }}">
+                <button>Supprimer</button>
+            </form>
+        </div>
+    {% else %}
+        <p>Aucune adresse enregistrée.</p>
+    {% endfor %}
+
+{% endblock %}

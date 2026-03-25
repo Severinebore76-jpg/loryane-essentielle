@@ -17,21 +17,18 @@ class AppFixtures extends Fixture
     {
         $this->passwordHasher = $passwordHasher;
     }
-
     public function load(ObjectManager $manager): void
     {
         // =========================
         // CATÉGORIES
         // =========================
         $categories = [];
-
         $nomsCategories = [
             'Relaxation',
             'Sommeil',
             'Énergie',
             'Confiance en soi'
         ];
-
         foreach ($nomsCategories as $nom) {
             $categorie = new Categorie();
             $categorie->setNom($nom);
@@ -40,7 +37,6 @@ class AppFixtures extends Fixture
             $manager->persist($categorie);
             $categories[] = $categorie;
         }
-
         // =========================
         // PRODUITS
         // =========================
@@ -52,15 +48,13 @@ class AppFixtures extends Fixture
             $produit->setPrix(rand(20, 80));
             $produit->setStock(rand(5, 50));
             $produit->setImage('produit' . $i . '.jpg');
-
             // catégorie aléatoire
             $produit->setCategorie($categories[array_rand($categories)]);
 
             $manager->persist($produit);
         }
-
         // =========================
-        // UTILISATEUR TEST
+        // UTILISATEUR TEST 1
         // =========================
         $user = new Utilisateur();
         $user->setEmail('test@test.com');
@@ -72,10 +66,23 @@ class AppFixtures extends Fixture
             $user,
             'password'
         );
-
         $user->setPassword($hashedPassword);
-
         $manager->persist($user);
+        // =========================
+        // UTILISATEUR TEST 2
+        // =========================
+        $user2 = new Utilisateur();
+        $user2->setEmail('test2@test.com');
+        $user2->setNom('Second');
+        $user2->setPrenom('User');
+        $user2->setRoles(['ROLE_USER']);
+
+        $hashedPassword2 = $this->passwordHasher->hashPassword(
+            $user2,
+            'password'
+        );
+        $user2->setPassword($hashedPassword2);
+        $manager->persist($user2);
 
         $manager->flush();
     }
