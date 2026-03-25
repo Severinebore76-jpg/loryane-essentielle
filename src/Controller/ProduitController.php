@@ -11,6 +11,7 @@ use App\Repository\CategorieRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Form\ProduitType;
 use App\Entity\Produit;
+use App\Service\PanierService;
 use Symfony\Component\HttpFoundation\File\Exception\FileException;
 use Symfony\Component\String\Slugger\SluggerInterface;
 
@@ -140,5 +141,26 @@ final class ProduitController extends AbstractController
             'produit' => $produit,
             'categorie' => $request->query->get('categorie'),
         ]);
+    }
+    #[Route('/panier/add/{id}', name: 'panier_add')]
+    public function addToCart(int $id, PanierService $panierService): Response
+    {
+        $panierService->add($id);
+
+        return $this->redirectToRoute('app_produits');
+    }
+    #[Route('/panier/update/{id}/{quantite}', name: 'panier_update')]
+    public function updateCart(int $id, int $quantite, PanierService $panierService): Response
+    {
+        $panierService->update($id, $quantite);
+
+        return $this->redirectToRoute('app_produits');
+    }
+    #[Route('/panier/remove/{id}', name: 'panier_remove')]
+    public function removeFromCart(int $id, PanierService $panierService): Response
+    {
+        $panierService->remove($id);
+
+        return $this->redirectToRoute('app_produits');
     }
     }
