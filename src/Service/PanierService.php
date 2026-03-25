@@ -90,14 +90,13 @@ class PanierService
             $produit = $produitRepository->find($produitId);
 
             if (!$produit) {
-                continue; // produit supprimé
+                continue;
             }
 
             if ($quantite <= 0) {
                 continue;
             }
 
-            // contrôle stock
             if ($produit->getStock() < $quantite) {
                 $quantite = $produit->getStock();
             }
@@ -109,5 +108,29 @@ class PanierService
         }
 
         return $panierComplet;
+    }
+
+    // 🔥 PRÉPARATION DONNÉES COMMANDE
+    public function getPanierPourCommande(ProduitRepository $produitRepository): array
+    {
+        $panierComplet = $this->getPanierComplet($produitRepository);
+
+        $commandeData = [];
+
+        foreach ($panierComplet as $item) {
+
+            $produit = $item['produit'];
+            $quantite = $item['quantite'];
+
+            $commandeData[] = [
+                'produit_id' => $produit->getId(),
+                'nom' => $produit->getNom(),
+                'prix' => $produit->getPrix(),
+                'quantite' => $quantite,
+                'total_ligne' => $produit->getPrix() * $quantite,
+            ];
+        }
+
+        return $commandeData;
     }
 }

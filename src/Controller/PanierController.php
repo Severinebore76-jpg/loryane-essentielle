@@ -21,4 +21,27 @@ class PanierController extends AbstractController
             'total' => $total,
         ]);
     }
+
+    #[Route('/panier/add/{id}', name: 'panier_add')]
+    public function add(int $id, PanierService $panierService): Response
+    {
+        $panierService->add($id);
+
+        return $this->redirectToRoute('app_produits');
+    }
+
+    #[Route('/panier/valider', name: 'panier_valider')]
+    public function valider(PanierService $panierService): Response
+    {
+        $panier = $panierService->getPanier();
+
+        if (empty($panier)) {
+            $this->addFlash('error', 'Votre panier est vide');
+
+            return $this->redirectToRoute('app_panier');
+        }
+
+        // accès autorisé → suite logique (temporaire)
+        return $this->redirectToRoute('app_panier');
+    }
 }
