@@ -37,11 +37,9 @@ class PanierController extends AbstractController
 
         if (empty($panier)) {
             $this->addFlash('error', 'Votre panier est vide');
-
             return $this->redirectToRoute('app_panier');
         }
-
-        // accès autorisé → suite logique (temporaire)
-        return $this->redirectToRoute('app_panier');
+        // redirection vers le tunnel commande
+        return $this->redirectToRoute('commande_recap');
     }
 }
