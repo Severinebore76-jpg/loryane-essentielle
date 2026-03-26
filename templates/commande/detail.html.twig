@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Commande #{{ commande.id }}{% endblock %}
+
+{% block body %}
+
+    <h1>Commande #{{ commande.id }}</h1>
+
+    <p><strong>Date :</strong> {{ commande.date|date('d/m/Y H:i') }}</p>
+    <p><strong>Statut :</strong> {{ commande.statut }}</p>
+    <p><strong>Total :</strong> {{ commande.total }} €</p>
+
+    <h2>Produits</h2>
+
+    <table border="1" cellpadding="10">
+        <thead>
+        <tr>
+            <th>Produit</th>
+            <th>Prix</th>
+            <th>Quantité</th>
+            <th>Sous-total</th>
+        </tr>
+        </thead>
+
+        <tbody>
+        {% for ligne in commande.ligneCommandes %}
+            <tr>
+                <td>{{ ligne.produit.nom }}</td>
+                <td>{{ ligne.prix }} €</td>
+                <td>{{ ligne.quantite }}</td>
+                <td>{{ ligne.sousTotal }} €</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <br>
+
+    <a href="{{ path('commande_list') }}">
+        ← Retour à mes commandes
+    </a>
+
+{% endblock %}
