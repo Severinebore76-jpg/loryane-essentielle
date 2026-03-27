@@ -1,49 +1,81 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <title>{% block title %}Welcome!{% endblock %}</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 128 128%22><text y=%221.2em%22 font-size=%2296%22>⚫️</text><text y=%221.3em%22 x=%220.2em%22 font-size=%2276%22 fill=%22%23fff%22>sf</text></svg>">
-        {% block stylesheets %}
-        {% endblock %}
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Loryane{% endblock %}</title>
 
-        {% block javascripts %}
-            {% block importmap %}{{ importmap('app') }}{% endblock %}
-        {% endblock %}
-    </head>
-    <body>
-        {# HEADER NAVIGATION #}
-        <header style="padding:10px; background:#ddd;">
-            <nav>
-                <a href="{{ path('app_home') }}">Accueil</a> |
-                <a href="{{ path('app_produits') }}">Catalogue</a> |
-                <a href="{{ path('app_panier') }}">Panier</a> |
-                <a href="{{ path('app_profil') }}">Mon compte</a> |
-                <a href="{{ path('app_about') }}">À propos</a>
+    <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+</head>
+<body>
+    <header class="header">
+        <div class="header-container">
+            <nav class="nav">
+                {% set route = app.request.attributes.get('_route') %}
+
+                <a href="{{ path('app_home') }}"
+                   class="nav-btn {{ route == 'app_home' ? 'active' }}">
+                    Accueil
+                </a>
+
+                <a href="{{ path('app_produits') }}"
+                   class="nav-btn {{ route starts with 'app_produits' ? 'active' }}">
+                    Catalogue
+                </a>
+
+                <a href="{{ path('app_panier') }}"
+                   class="nav-btn {{ route starts with 'app_panier' ? 'active' }}">
+                    Mon panier
+                </a>
+
+                <a href="{{ path('app_profil') }}"
+                   class="nav-btn {{ route starts with 'app_profil' ? 'active' }}">
+                    Mon compte
+                </a>
+
+                <a href="{{ path('app_about') }}"
+                   class="nav-btn {{ route == 'app_about' ? 'active' }}">
+                    À propos
+                </a>
             </nav>
-        </header>
-        {# BLOC AUTH #}
-        <div style="padding:10px; background:#eee;">
-            {% if app.user %}
-                Connecté : {{ app.user.userIdentifier }}
-                |
-                <a href="{{ path('app_logout') }}">Se déconnecter</a>
-            {% else %}
-                <a href="{{ path('app_login') }}">Se connecter</a>
-            {% endif %}
-        </div>
-        {# FLASH MESSAGES #}
-        {% for label, messages in app.flashes %}
-            {% for message in messages %}
-                <div style="padding:10px; margin:10px; border:1px solid red; color:red;">
-                    {{ message }}
+            <div class="header-right">
+                <span class="icon">🔒</span>
+                <span class="icon">🔍</span>
+                <div class="lang-switch">
+                    <span class="lang active">Fr</span>
+                    <span class="lang">En</span>
+                    <span class="lang">Es</span>
                 </div>
-            {% endfor %}
-            {% for message in app.flashes('success') %}
-                <div style="color:green;">{{ message }}</div>
-            {% endfor %}
-        {% endfor %}
-        {# CONTENU #}
+            </div>
+        </div>
+    </header>
+    <div class="auth-bar">
+        {% if app.user %}
+            <strong>Connecté : {{ app.user.userIdentifier }}</strong>
+            |
+            <a href="{{ path('app_logout') }}">Se déconnecter</a>
+        {% else %}
+            <a href="{{ path('app_login') }}">Se connecter</a>
+        {% endif %}
+    </div>
+    <div class="auth-bar">
+        {% if app.user %}
+            <strong>Connecté : {{ app.user.userIdentifier }}</strong>
+            |
+            <a href="{{ path('app_logout') }}">Se déconnecter</a>
+        {% else %}
+            <a href="{{ path('app_login') }}">Se connecter</a>
+        {% endif %}
+    </div>
+
+    <!-- 🔥 ICI → FLASH MESSAGE -->
+    {% for message in app.flashes('success') %}
+        <div class="flash-success">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <main>
         {% block body %}{% endblock %}
-    </body>
+    </main>
+</body>
 </html>

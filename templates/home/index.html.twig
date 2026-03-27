@@ -4,12 +4,29 @@
 
 {% block body %}
 
-    <h1>Accueil</h1>
+    <section class="hero">
+        <img src="{{ asset('images/icone_loryane.png') }}" class="logo">
 
-    <p>Bienvenue sur Loryane Essentielle</p>
+        <h1>Loryane <span>Essentielle®</span></h1>
 
-    <p>
-        Découvrez nos packs bien-être haut de gamme, conçus pour vous accompagner au quotidien.
-    </p>
+        <p class="tagline">
+            "Quand la lumière intérieure s’allie à la puissance de la nature"
+        </p>
+
+        <a href="{{ path('app_produits') }}" class="cta">
+            Découvrir nos coffrets
+        </a>
+    </section>
+
+    <section class="intro">
+        <h2>Bienvenue dans notre univers bien-être</h2>
+    </section>
+
+    <section class="gallery">
+        <img src="{{ asset('images/meditation-02-fevrier.jpg') }}">
+        <img src="{{ asset('images/meditation-03-mars.jpg') }}">
+        <img src="{{ asset('images/meditation-04-avril.jpg') }}">
+        <img src="{{ asset('images/meditation-06-juin.jpg') }}">
+    </section>
 
 {% endblock %}

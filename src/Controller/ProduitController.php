@@ -5,6 +5,7 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Repository\ProduitRepository;
 use App\Repository\CategorieRepository;
@@ -30,21 +31,23 @@ final class ProduitController extends AbstractController
         } else {
             $produits = $produitRepository->findAll();
         }
+
         return $this->render('produit/index.html.twig', [
             'produits' => $produits,
             'categories' => $categorieRepository->findAll(),
         ]);
     }
-    #[Route('/produit/new', name: 'produit_new')]
-    public function new(Request $request, EntityManagerInterface $em, SluggerInterface $slugger): Response    {
 
-        //$this->denyAccessUnlessGranted('ROLE_ADMIN');
+    #[Route('/produit/new', name: 'produit_new')]
+    public function new(Request $request, EntityManagerInterface $em, SluggerInterface $slugger): Response
+    {
         $produit = new Produit();
 
         $form = $this->createForm(ProduitType::class, $produit);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+
             $imageFile = $form->get('image')->getData();
 
             if ($imageFile) {
@@ -57,12 +60,11 @@ final class ProduitController extends AbstractController
                         $this->getParameter('uploads_directory'),
                         $newFilename
                     );
-                } catch (FileException $e) {
-                    // erreur upload (on ignore pour l'instant)
-                }
+                } catch (FileException $e) {}
 
                 $produit->setImage($newFilename);
             }
+
             $em->persist($produit);
             $em->flush();
 
@@ -73,20 +75,20 @@ final class ProduitController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-    #[Route('/produit/{id}/edit', name: 'produit_edit')]
-    public function edit(Produit $produit, Request $request, EntityManagerInterface $em, SluggerInterface $slugger): Response    {
-        //$this->denyAccessUnlessGranted('ROLE_ADMIN');
-        $form = $this->createForm(ProduitType::class, $produit);
 
+    #[Route('/produit/{id}/edit', name: 'produit_edit')]
+    public function edit(Produit $produit, Request $request, EntityManagerInterface $em, SluggerInterface $slugger): Response
+    {
+        $form = $this->createForm(ProduitType::class, $produit);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 
-            // règle métier (important pour ton exam)
             if ($produit->getStock() < 0) {
                 $this->addFlash('error', 'Stock invalide');
                 return $this->redirectToRoute('app_produits');
             }
+
             $imageFile = $form->get('image')->getData();
 
             if ($imageFile) {
@@ -99,9 +101,7 @@ final class ProduitController extends AbstractController
                         $this->getParameter('uploads_directory'),
                         $newFilename
                     );
-                } catch (FileException $e) {
-                    // ignore pour l'instant
-                }
+                } catch (FileException $e) {}
 
                 $produit->setImage($newFilename);
             }
@@ -116,13 +116,12 @@ final class ProduitController extends AbstractController
             'produit' => $produit,
         ]);
     }
+
     #[Route('/produit/{id}', name: 'produit_delete', methods: ['POST'])]
     public function delete(Request $request, Produit $produit, EntityManagerInterface $em): Response
     {
-        //$this->denyAccessUnlessGranted('ROLE_ADMIN');
         if ($this->isCsrfTokenValid('delete'.$produit->getId(), $request->request->get('_token'))) {
 
-            // règle métier (important)
             if (count($produit->getLigneCommandes()) > 0) {
                 $this->addFlash('error', 'Produit utilisé dans une commande');
                 return $this->redirectToRoute('app_produits');
@@ -134,6 +133,7 @@ final class ProduitController extends AbstractController
 
         return $this->redirectToRoute('app_produits');
     }
+
     #[Route('/produit/{id}', name: 'produit_show', methods: ['GET'])]
     public function show(Produit $produit, Request $request): Response
     {
@@ -142,13 +142,15 @@ final class ProduitController extends AbstractController
             'categorie' => $request->query->get('categorie'),
         ]);
     }
+
     #[Route('/panier/add/{id}', name: 'panier_add')]
     public function addToCart(int $id, PanierService $panierService): Response
     {
         $panierService->add($id);
 
-        return $this->redirectToRoute('app_produits');
+        return new JsonResponse(['success' => true]);
     }
+
     #[Route('/panier/update/{id}/{quantite}', name: 'panier_update')]
     public function updateCart(int $id, int $quantite, PanierService $panierService): Response
     {
@@ -156,6 +158,7 @@ final class ProduitController extends AbstractController
 
         return $this->redirectToRoute('app_produits');
     }
+
     #[Route('/panier/remove/{id}', name: 'panier_remove')]
     public function removeFromCart(int $id, PanierService $panierService): Response
     {
@@ -163,4 +166,4 @@ final class ProduitController extends AbstractController
 
         return $this->redirectToRoute('app_produits');
     }
-    }
+}

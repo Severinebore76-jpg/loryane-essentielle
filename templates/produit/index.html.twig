@@ -3,60 +3,164 @@
 {% block title %}Catalogue produits{% endblock %}
 
 {% block body %}
-    <h1>Catalogue produits</h1>
-    <h2>Filtrer la catégorie</h2>
-    <ul>
-        <li>
-            <a href="{{ path('app_produits') }}">Toutes</a>
-        </li>
-        {% for categorie in categories %}
-        <li>
-            <a href="{{ path('app_produits', {categorie: categorie.id}) }}">
-                {{ categorie.nom }}
-            </a>
-        </li>
-        {% endfor %}
-    </ul>
 
-    {% for produit in produits %}
-        <div style="border:1px solid #ccc; padding:10px; margin:10px; width:250px; display:inline-block; vertical-align:top;">
+    <!-- HEADER VISUEL CATÉGORIE -->
+    <section class="catalog-header">
+        <h1>Mini Packs - Pépites Bien-Être</h1>
+        <p>
+            De petites merveilles à glisser dans la poche ou dans le sac pour des instants de reconnexion intérieure.
+        </p>
+    </section>
 
-            <a href="{{ path('produit_show', {
-                id: produit.id,
-                categorie: app.request('categorie')
-            }) }}">
-                <img
-                    src="{{ produit.image
-                    ? asset('uploads/' ~ produit.image)
-                    : asset('images/default.jpg') }}"
-                    width="100%"
-                    style="height:150px; object-fit:cover;"
-                    onerror="this.src='{{ asset('images/default.jpg') }}'">
+    <!-- MENU HAMBURGER CATÉGORIES -->
+    <div class="catalog-menu">
+
+        <button id="menu-toggle" class="menu-icon">☰</button>
+
+        <div id="menu-panel" class="menu-panel">
+
+            <a href="{{ path('app_produits') }}"
+               class="{{ app.request.query.get('categorie') is null ? 'active' }}">
+                Toutes
             </a>
 
-            <h2>
-                <a href="{{ path('produit_show', {id: produit.id}) }}">{{ produit.nom }}
+            {% for categorie in categories %}
+                <a href="{{ path('app_produits', {categorie: categorie.id}) }}"
+                   class="{{ app.request.query.get('categorie') == categorie.id ? 'active' }}">
+                    {{ categorie.nom }}
                 </a>
-            </h2>
+            {% endfor %}
 
-            <p style="font-size:14px;">{{ produit.description|slice(0, 80) }}...</p>
-
-            <p><strong>{{ produit.prix }} €</strong></p>
-
-            <p>Stock : {{ produit.stock }}</p>
-
-            <p style="font-size:12px; color:#666;">{{ produit.categorie.nom }}</p>
-
-            <a href="{{ path('produit_edit', {id: produit.id}) }}">Modifier</a>
-
-            <form method="post" action="{{ path('produit_delete', {id: produit.id}) }}" style="display:inline;">
-                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ produit.id) }}">
-                <button onclick="return confirm('Supprimer ce produit ?')">
-                    Supprimer
-                </button>
-            </form>
         </div>
-    {% else %}
-        <p>Aucun produit trouvé</p>
-    {% endfor %}
+
+    </div>
+
+    <!-- PRODUITS -->
+    <div class="products-grid">
+
+        {% for produit in produits %}
+            <div class="product-card">
+
+                <!-- IMAGE -->
+                <a href="{{ path('produit_show', {
+                    id: produit.id,
+                    categorie: app.request.query.get('categorie')
+                }) }}">
+                    <img
+                        src="{{ produit.image
+                        ? asset('uploads/' ~ produit.image)
+                        : asset('images/default.jpg') }}"
+                        onerror="this.src='{{ asset('images/default.jpg') }}'">
+                </a>
+
+                <!-- CONTENU -->
+                <div class="product-content">
+
+                    <h2 class="product-title">
+                        <a href="{{ path('produit_show', {id: produit.id}) }}">
+                            {{ produit.nom }}
+                        </a>
+                    </h2>
+
+                    <p class="product-description">
+                        {{ produit.description|slice(0, 80) }}...
+                    </p>
+
+                    <p class="product-info">
+                        {{ produit.categorie.nom }}
+                    </p>
+
+                    <p class="product-info">
+                        Stock : {{ produit.stock }}
+                    </p>
+
+                    {% if produit.pierre is defined %}
+                        <p class="product-extra"><strong>Pierre :</strong> {{ produit.pierre }}</p>
+                    {% endif %}
+
+                    {% if produit.huile is defined %}
+                        <p class="product-extra"><strong>Huile :</strong> {{ produit.huile }}</p>
+                    {% endif %}
+
+                    {% if produit.rituel is defined %}
+                        <p class="product-extra">{{ produit.rituel|slice(0, 60) }}...</p>
+                    {% endif %}
+
+                    <!-- BAS CARTE -->
+                    <div class="product-bottom">
+                        <span class="product-price">{{ produit.prix }} € HT</span>
+
+                        <a href="#"
+                           class="cart-icon add-to-cart"
+                           data-url="{{ path('panier_add', {id: produit.id}) }}">
+                            🧺
+                        </a>
+                    </div>
+
+                </div>
+
+                <!-- POPUP -->
+                <div class="add-popup">Ajouté au panier ✔</div>
+
+                <!-- ADMIN -->
+                <div class="product-actions">
+                    <a href="{{ path('produit_edit', {id: produit.id}) }}">Modifier</a>
+
+                    <form method="post"
+                          action="{{ path('produit_delete', {id: produit.id}) }}"
+                          style="display:inline;">
+                        <input type="hidden"
+                               name="_token"
+                               value="{{ csrf_token('delete' ~ produit.id) }}">
+                        <button onclick="return confirm('Supprimer ce produit ?')">
+                            Supprimer
+                        </button>
+                    </form>
+                </div>
+
+            </div>
+
+        {% else %}
+            <p style="padding:40px;">Aucun produit trouvé</p>
+        {% endfor %}
+
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            // MENU
+            const btn = document.getElementById("menu-toggle");
+            const panel = document.getElementById("menu-panel");
+
+            btn.addEventListener("click", function () {
+                panel.style.display = panel.style.display === "block" ? "none" : "block";
+            });
+
+            // PANIER AJAX
+            document.querySelectorAll(".add-to-cart").forEach(button => {
+
+                button.addEventListener("click", function (e) {
+                    e.preventDefault();
+
+                    const url = this.dataset.url;
+                    const card = this.closest(".product-card");
+                    const popup = card.querySelector(".add-popup");
+
+                    fetch(url)
+                        .then(() => {
+                            popup.classList.add("show");
+
+                            setTimeout(() => {
+                                popup.classList.remove("show");
+                            }, 2000);
+                        });
+
+                });
+
+            });
+
+        });
+    </script>
+
 {% endblock %}
