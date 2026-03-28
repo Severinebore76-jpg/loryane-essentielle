@@ -50,7 +50,9 @@
                         src="{{ produit.image
                         ? asset('uploads/' ~ produit.image)
                         : asset('images/default.jpg') }}"
-                        onerror="this.src='{{ asset('images/default.jpg') }}'">
+                        alt="{{ produit.nom }}"
+                        onerror="this.src='{{ asset('images/default.jpg') }}'"
+                    >
                 </a>
 
                 <!-- CONTENU -->
@@ -62,66 +64,64 @@
                         </a>
                     </h2>
 
+                    <p class="product-category">
+                        {{ produit.categorie.nom }}
+                    </p>
+
                     <p class="product-description">
                         {{ produit.description|slice(0, 80) }}...
                     </p>
 
-                    <p class="product-info">
-                        {{ produit.categorie.nom }}
-                    </p>
-
-                    <p class="product-info">
-                        Stock : {{ produit.stock }}
-                    </p>
-
-                    {% if produit.pierre is defined %}
-                        <p class="product-extra"><strong>Pierre :</strong> {{ produit.pierre }}</p>
+                    {# STOCK UNIQUEMENT ADMIN #}
+                    {% if is_granted('ROLE_ADMIN') %}
+                        <p class="product-info">Stock : {{ produit.stock }}</p>
                     {% endif %}
 
-                    {% if produit.huile is defined %}
-                        <p class="product-extra"><strong>Huile :</strong> {{ produit.huile }}</p>
-                    {% endif %}
-
-                    {% if produit.rituel is defined %}
-                        <p class="product-extra">{{ produit.rituel|slice(0, 60) }}...</p>
-                    {% endif %}
-
-                    <!-- BAS CARTE -->
+                    <!-- BAS CARD -->
                     <div class="product-bottom">
-                        <span class="product-price">{{ produit.prix }} € HT</span>
 
-                        <a href="#"
-                           class="cart-icon add-to-cart"
-                           data-url="{{ path('panier_add', {id: produit.id}) }}">
-                            🧺
-                        </a>
+                        <div class="product-price-block">
+                    <span class="product-price">
+                        {{ (produit.prix * 1.20)|number_format(2, ',', ' ') }} €
+                    </span>
+                            <p class="vat-note">Prix TTC — ajustement au paiement</p>
+                        </div>
+
+                        {% if produit.stock > 0 %}
+                            <a href="#"
+                               class="cart-icon add-to-cart"
+                               data-url="{{ path('panier_add', {id: produit.id}) }}">
+                                🧺
+                            </a>
+                        {% else %}
+                            <span class="out-of-stock">Rupture</span>
+                        {% endif %}
+
                     </div>
 
                 </div>
 
-                <!-- POPUP -->
+                <!-- POPUP (OBLIGATOIRE DANS LA CARD) -->
                 <div class="add-popup">Ajouté au panier ✔</div>
 
                 <!-- ADMIN -->
-                <div class="product-actions">
-                    <a href="{{ path('produit_edit', {id: produit.id}) }}">Modifier</a>
+                {% if is_granted('ROLE_ADMIN') %}
+                    <div class="product-actions">
+                        <a href="{{ path('produit_edit', {id: produit.id}) }}">Modifier</a>
 
-                    <form method="post"
-                          action="{{ path('produit_delete', {id: produit.id}) }}"
-                          style="display:inline;">
-                        <input type="hidden"
-                               name="_token"
-                               value="{{ csrf_token('delete' ~ produit.id) }}">
-                        <button onclick="return confirm('Supprimer ce produit ?')">
-                            Supprimer
-                        </button>
-                    </form>
-                </div>
+                        <form method="post"
+                              action="{{ path('produit_delete', {id: produit.id}) }}">
+                            <input type="hidden"
+                                   name="_token"
+                                   value="{{ csrf_token('delete' ~ produit.id) }}">
+                            <button onclick="return confirm('Supprimer ?')">
+                                Supprimer
+                            </button>
+                        </form>
+                    </div>
+                {% endif %}
 
             </div>
-
-        {% else %}
-            <p style="padding:40px;">Aucun produit trouvé</p>
         {% endfor %}
 
     </div>
@@ -129,7 +129,7 @@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
 
-            // MENU
+            // MENU HAMBURGER
             const btn = document.getElementById("menu-toggle");
             const panel = document.getElementById("menu-panel");
 
@@ -137,9 +137,8 @@
                 panel.style.display = panel.style.display === "block" ? "none" : "block";
             });
 
-            // PANIER AJAX
+            // PANIER AJAX + POPUP
             document.querySelectorAll(".add-to-cart").forEach(button => {
-
                 button.addEventListener("click", function (e) {
                     e.preventDefault();
 
@@ -150,7 +149,6 @@
                     fetch(url)
                         .then(() => {
                             popup.classList.add("show");
-
                             setTimeout(() => {
                                 popup.classList.remove("show");
                             }, 2000);
