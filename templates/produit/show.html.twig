@@ -3,32 +3,89 @@
 {% block title %}{{ produit.nom }}{% endblock %}
 
 {% block body %}
-    <h1>{{ produit.nom }}</h1>
 
-    <img
-        src="{{ asset('uploads/' ~ produit.image) }}"
-        alt="{{ produit.nom }}"
-        style="width:300px; object-fit:cover;"
-        onerror="this.src='{{ asset('images/default.jpg') }}'"
-    >
+    <div class="product-detail">
 
-    <p>{{ produit.description }}</p>
+        <!-- IMAGE -->
+        <div class="product-detail-image">
+            <img
+                src="{{ produit.image
+                ? asset('uploads/' ~ produit.image)
+                : asset('images/default.jpg') }}"
+                alt="{{ produit.nom }}"
+                onerror="this.src='{{ asset('images/default.jpg') }}'"
+            >
+        </div>
+        <div class="add-popup">Ajouté au panier ✔</div>
 
-    <p><strong>{{ produit.prix }} €</strong></p>
+        <!-- CONTENU -->
+        <div class="product-detail-content">
 
-    <p>Stock : {{ produit.stock }}</p>
+            <!-- TITRE -->
+            <h1 class="product-detail-title">{{ produit.nom }}</h1>
 
-    <p>Catégorie : {{ produit.categorie.nom }}</p>
+            <!-- CATÉGORIE -->
+            <span class="product-detail-category">
+            {{ produit.categorie.nom }}
+        </span>
 
-    <br>
+            <!-- DESCRIPTION -->
+            <p class="product-detail-description">
+                {{ produit.description }}
+            </p>
 
-    <a href="{{ path('panier_add', { id: produit.id }) }}">
-        Ajouter au panier
-    </a>
+            <!-- STOCK ADMIN UNIQUEMENT -->
+            {% if is_granted('ROLE_ADMIN') %}
+                <p class="product-detail-stock">
+                    Stock : {{ produit.stock }}
+                </p>
+            {% endif %}
 
-    <br><br>
+            <!-- PRIX -->
+            <div class="product-detail-price">
+                {{ (produit.prix * 1.20)|number_format(2, ',', ' ') }} €
+                <span>Prix TTC — ajustement au paiement</span>
+            </div>
 
-    <a href="{{ path('app_produits', {
-        categorie: categorie
-    }) }}">← Retour</a>
+            <!-- CTA -->
+            {% if produit.stock > 0 %}
+                <a href="#"
+                   class="btn-add-cart add-to-cart"
+                   data-url="{{ path('panier_add', { id: produit.id }) }}">
+                    Ajouter au panier 🧺
+                </a>
+            {% else %}
+                <p class="out-of-stock">Rupture de stock</p>
+            {% endif %}
+
+            <!-- RETOUR -->
+            <a href="{{ path('app_produits', {categorie: categorie}) }}"
+               class="back-link">
+                ← Retour au catalogue
+            </a>
+
+        </div>
+
+    </div>
+    <script>
+        document.querySelectorAll(".add-to-cart").forEach(button => {
+            button.addEventListener("click", function (e) {
+                e.preventDefault();
+
+                const url = this.dataset.url;
+
+                const container = this.closest(".product-detail"); // important
+                const popup = container.querySelector(".add-popup");
+
+                fetch(url)
+                    .then(() => {
+                        popup.classList.add("show");
+
+                        setTimeout(() => {
+                            popup.classList.remove("show");
+                        }, 2000);
+                    });
+            });
+        });
+    </script>
 {% endblock %}
