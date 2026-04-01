@@ -3,9 +3,7 @@
 ===================================================== */
 body {
     margin: 0;
-    background: #f8f5f3;
 }
-
 /* =====================================================
    HEADER
 ===================================================== */
@@ -13,7 +11,6 @@ body {
     background: #f8f5f3;
     padding: 10px 0;
 }
-
 .header-container {
     width: 100%;
     padding: 10px 10px;
@@ -22,13 +19,11 @@ body {
     align-items: center;
     box-sizing: border-box;
 }
-
 /* NAVIGATION */
 .nav {
     display: flex;
     gap: 20px;
 }
-
 .nav-btn {
     padding: 10px 20px;
     border: 2px solid #8f4930;
@@ -39,30 +34,25 @@ body {
     background: transparent;
     transition: all 0.3s ease;
 }
-
 .nav-btn.active {
     background: #8f4930;
     color: white;
 }
-
 /* HEADER RIGHT */
 .header-right {
     display: flex;
     align-items: center;
     gap: 15px;
 }
-
 .icon {
     font-size: 18px;
     cursor: pointer;
 }
-
 /* LANG SWITCH */
 .lang-switch {
     display: flex;
     gap: 8px;
 }
-
 .lang {
     padding: 5px 10px;
     border: 1px solid #8f4930;
@@ -71,12 +61,10 @@ body {
     color: #8f4930;
     cursor: pointer;
 }
-
 .lang.active {
     background: #8f4930;
     color: white;
 }
-
 /* AUTH */
 .auth-bar {
     text-align: right;
@@ -85,48 +73,41 @@ body {
     opacity: 0.8;
     color: #8f4930;
 }
-
 .auth-bar a {
     color: #8f4930;
     text-decoration: underline;
     font-weight: 500;
 }
-
 /* =====================================================
    HOME
 ===================================================== */
 .hero {
     text-align: center;
-    padding: 10px 10px 20px;
-    background: #e6cfc9;
+    padding: 10px 10px 40px;
+    background: radial-gradient(circle at top, #f1ddd7 20%, #f8f5f3 50%);
 }
-
 .logo {
     width: 360px;
     margin-bottom: 10px;
 }
-
 .hero h1 {
-    font-size: 42px;
+    font-size: clamp(26px, 5vw, 42px);;
     color: #8f4930;
     margin-bottom: 10px;
     letter-spacing: 1px;
 }
-
 .hero h1 span {
-    font-size: 20px;
+    font-size: clamp(16px, 3vw, 20px);
     font-style: italic;
     font-weight: 400;
     margin-left: -4px;
     position: relative;
 }
-
 .tagline {
     margin: 20px 0;
     font-size: 20px;
     color: #8f4930;
 }
-
 .cta {
     display: inline-block;
     margin-top: 15px;
@@ -136,17 +117,14 @@ body {
     border-radius: 25px;
     text-decoration: none;
 }
-
 .intro {
     text-align: center;
     margin: 80px 0 40px;
 }
-
 .intro h2 {
     color: #8f4930;
     font-size: 28px;
 }
-
 /* GALERIE */
 .gallery {
     display: flex;
@@ -154,13 +132,11 @@ body {
     gap: 30px;
     padding: 60px;
 }
-
 .gallery img {
     width: 180px;
     border-radius: 12px;
     box-shadow: 0 12px 30px rgba(0,0,0,0.25);
 }
-
 .gallery img:nth-child(1) { transform: translateY(-20px); }
 .gallery img:nth-child(2) { transform: translateY(30px); }
 .gallery img:nth-child(3) { transform: translateY(-10px); }
@@ -186,19 +162,7 @@ body {
     }
 
     .logo {
-        width: 200px;
-    }
-
-    .hero h1 {
-        font-size: 28px;
-    }
-
-    .hero h1 span {
-        font-size: 16px;
-    }
-
-    .tagline {
-        font-size: 16px;
+        width: 240px;
     }
 
     .gallery {
@@ -214,13 +178,38 @@ body {
         aspect-ratio: 3/4;
         transform: none !important;
     }
-}
-
+        .about-hero {
+            padding: 30px 15px;
+        }
+        .about-logo {
+            width: 140px;
+        }
+        .about-hero h1 {
+            font-size: 26px;
+        }
+        .about-hero h1 span {
+            font-size: 26px;
+        }
+        .about-container {
+            margin: 30px auto;
+        }
+        .about-card {
+            padding: 20px;
+            font-size: 14px;
+        }
+        .about-links {
+            gap: 10px;
+        }
+        .link-pill {
+            font-size: 13px;
+            padding: 8px 14px;
+        }
+    }
 /* =====================================================
    CATALOGUE
 ===================================================== */
 .catalog-header {
-    background: #e6cfc9;
+    background: radial-gradient(circle at top, #f1ddd7 20%, #f8f5f3 50%);
     text-align: center;
     padding: 25px 20px;
     margin-bottom: 30px;
@@ -231,12 +220,10 @@ body {
     font-size: 24px;
     margin-bottom: 10px;
 }
-
 .catalog-header p {
     color: #8f4930;
     font-size: 15px;
 }
-
 /* GRID */
 .products-grid {
     padding: 20px 40px;
@@ -245,7 +232,6 @@ body {
     gap: 30px;
     justify-content: center;
 }
-
 /* CARD */
 .product-card {
     width: 260px;
@@ -350,6 +336,8 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
+    text-decoration: none;
+    color: inherit;
 }
 
 /* =====================================================
@@ -597,4 +585,303 @@ body {
 .cart-empty {
     text-align: center;
     margin-top: 50px;
+}
+.cart-actions {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.btn-validate {
+    background-color: #8b3f2f;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 25px;
+    cursor: pointer;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.btn-validate:hover {
+    opacity: 0.9;
+}
+
+.input-field {
+    width: 100%;
+    padding: 10px;
+    border-radius: 8px;
+    border: 1px solid #ddd;
+    margin-top: 5px;
+    font-size: 14px;
+}
+
+.cart-label {
+    font-size: 13px;
+    color: #8f4930;
+    opacity: 0.8;
+}
+/* =====================================================
+   FILTRES PROPRE VERSION STABLE
+===================================================== */
+
+/* CONTAINER */
+.filters-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+/* BOUTON */
+.filter-btn {
+    padding: 10px 20px;
+    border: 2px solid #8f4930;
+    border-radius: 25px;
+    background: transparent;
+    color: #8f4930;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+    background: rgba(143, 73, 48, 0.08);
+}
+
+/* PANEL */
+.filter-panel {
+    display: none;
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+    z-index: 1000;
+    min-width: 240px;
+}
+
+/* FORM */
+.filter-panel form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* LABEL */
+.filter-panel label {
+    font-size: 13px;
+    color: #8f4930;
+    opacity: 0.8;
+}
+
+/* SELECT UNIFIÉ */
+.filter-panel select {
+    padding: 8px 14px;
+    border: 1px solid #8f4930;
+    border-radius: 20px;
+    color: #8f4930;
+    font-weight: 500;
+    background: transparent;
+    font-size: 14px;
+    width: 100%;
+    appearance: none;
+}
+
+.filter-panel select:hover {
+    background: rgba(143, 73, 48, 0.08);
+}
+
+/* BOUTON APPLY */
+.filter-panel .btn-validate {
+    margin-top: 10px;
+    background: #8f4930;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.filter-panel .btn-validate:hover {
+    opacity: 0.9;
+}
+/* FIX FORMULAIRE PROFIL */
+.cart-item.cart-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.cart-item.cart-form .cart-info {
+    width: 100%;
+}
+
+.cart-item.cart-form input {
+    width: 100%;
+}
+/* =====================================================
+   ABOUT HERO (stylé premium)
+===================================================== */
+
+.about-hero {
+    text-align: center;
+    padding: 10px 20px 40px;
+    background: radial-gradient(circle at top, #f1ddd7 20%, #f8f5f3 50%);
+}
+
+.about-logo {
+    width: 240px;
+    margin-bottom: 10px;
+}
+
+.about-hero h1 {
+    font-size: clamp(26px, 5vw, 42px);
+    color: #8f4930;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+}
+
+.about-hero h1 span {
+    font-size: clamp(16px, 3vw, 20px);
+    font-style: italic;
+    font-weight: 400;
+    margin-left: -4px;
+    position: relative;
+}
+
+.about-tagline {
+    margin: 14px 0;
+    font-size: clamp(16px, 3vw, 20px);
+    color: #8f4930;
+}
+
+/* =====================================================
+   ABOUT CONTENT (effet premium)
+===================================================== */
+
+.about-container {
+    max-width: 900px;
+    margin: 60px auto;
+    padding: 0 20px;
+}
+
+.about-card {
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 20px;
+    line-height: 1.8;
+    color: #5a3a30;
+
+    box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+    position: relative;
+}
+
+/* petite touche design */
+.about-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 6px;
+    width: 100%;
+    background: #8f4930;
+    border-radius: 20px 20px 0 0;
+}
+
+/* =====================================================
+   LINKS PREMIUM
+===================================================== */
+
+.about-links {
+    margin-top: 40px;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.link-pill {
+    padding: 10px 18px;
+    border-radius: 25px;
+    border: 1px solid #8f4930;
+    color: #8f4930;
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.link-pill:hover {
+    background: #8f4930;
+    color: white;
+}
+/* =====================================================
+   FOOTER
+===================================================== */
+.footer {
+    margin-top: 60px;
+    padding: 30px 20px;
+    text-align: center;
+}
+
+.footer-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.footer-container a {
+    color: #8f4930;
+    text-decoration: none;
+    font-size: 14px;
+    padding: 8px 14px;
+    border-radius: 20px;
+    border: 1px solid transparent;
+    transition: all 0.2s ease;
+}
+
+.footer-container a:hover {
+    border-color: #8f4930;
+    background: rgba(143, 73, 48, 0.08);
+}
+/* CONTAINER */
+.filters-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+}
+
+/* BOUTON */
+.filter-btn {
+    padding: 10px 20px;
+    border: 2px solid #8f4930;
+    border-radius: 25px;
+    background: transparent;
+    color: #8f4930;
+    cursor: pointer;
+}
+
+/* PANEL */
+.filter-panel {
+    display: none;
+    position: absolute;
+    margin-top: 10px;
+    background: white;
+    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    z-index: 10;
+}
+
+/* FORM */
+.filter-panel form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }

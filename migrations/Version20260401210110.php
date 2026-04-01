@@ -1,0 +1,35 @@
+<?php
+
+declare(strict_types=1);
+
+namespace DoctrineMigrations;
+
+use Doctrine\DBAL\Schema\Schema;
+use Doctrine\Migrations\AbstractMigration;
+
+/**
+ * Auto-generated Migration: Please modify to your needs!
+ */
+final class Version20260401210110 extends AbstractMigration
+{
+    public function getDescription(): string
+    {
+        return '';
+    }
+
+    public function up(Schema $schema): void
+    {
+        // this up() migration is auto-generated, please modify it to your needs
+        $this->addSql('ALTER TABLE categorie DROP FOREIGN KEY `FK_497DD6343138DDE2`');
+        $this->addSql('DROP INDEX IDX_497DD6343138DDE2 ON categorie');
+        $this->addSql('ALTER TABLE categorie DROP type_pack_id');
+    }
+
+    public function down(Schema $schema): void
+    {
+        // this down() migration is auto-generated, please modify it to your needs
+        $this->addSql('ALTER TABLE categorie ADD type_pack_id INT DEFAULT NULL');
+        $this->addSql('ALTER TABLE categorie ADD CONSTRAINT `FK_497DD6343138DDE2` FOREIGN KEY (type_pack_id) REFERENCES type_pack (id) ON UPDATE NO ACTION ON DELETE NO ACTION');
+        $this->addSql('CREATE INDEX IDX_497DD6343138DDE2 ON categorie (type_pack_id)');
+    }
+}

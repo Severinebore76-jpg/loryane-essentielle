@@ -61,9 +61,11 @@
                     Total : {{ total|number_format(2, ',', ' ') }} €
                 </div>
 
-                <a href="#" class="btn-validate">
-                    Valider mon panier
-                </a>
+                <form method="post" action="{{ path('commande_recap') }}">
+                    <button type="submit" class="btn-validate">
+                        Valider mon panier
+                    </button>
+                </form>
 
             </div>
 

@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Repository\ProduitRepository;
 use App\Repository\CategorieRepository;
+use App\Repository\TypePackRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Form\ProduitType;
 use App\Entity\Produit;
@@ -18,23 +19,65 @@ use Symfony\Component\String\Slugger\SluggerInterface;
 
 final class ProduitController extends AbstractController
 {
-    #[Route('/produits', name: 'app_produits')]
+    #[Route('/produits/{slug}', name: 'app_produits', defaults: ['slug' => null])]
     public function index(
         ProduitRepository $produitRepository,
         CategorieRepository $categorieRepository,
+        TypePackRepository $typePackRepository,
         Request $request,
+        ?string $slug
     ): Response {
-        $categorieId = $request->query->get('categorie');
 
-        if ($categorieId) {
-            $produits = $produitRepository->findBy(['categorie' => $categorieId]);
-        } else {
-            $produits = $produitRepository->findAll();
+        $categorieId = $request->query->get('categorie');
+        $tri = $request->query->get('tri');
+
+        $typePack = null;
+
+        // 🔹 Récupération du type pack
+        if ($slug) {
+            $typePack = $typePackRepository->findOneBy(['slug' => $slug]);
+
+            if (!$typePack) {
+                throw $this->createNotFoundException('Type de pack introuvable');
+            }
         }
+
+        // 🔹 QueryBuilder
+        $qb = $produitRepository->createQueryBuilder('p')
+            ->leftJoin('p.categorie', 'c')
+            ->leftJoin('p.typePack', 't');
+
+        // 🔹 FILTRE TYPE PACK
+        if ($typePack) {
+            $qb->andWhere('p.typePack = :typePack')
+                ->setParameter('typePack', $typePack);
+        }
+
+        // 🔹 FILTRE CATÉGORIE
+        if ($categorieId) {
+            $qb->andWhere('p.categorie = :categorie')
+                ->setParameter('categorie', $categorieId);
+        }
+
+        // 🔹 TRI
+        if ($tri === 'prix_asc') {
+            $qb->orderBy('p.prix', 'ASC');
+        } elseif ($tri === 'prix_desc') {
+            $qb->orderBy('p.prix', 'DESC');
+        } elseif ($tri === 'nom') {
+            $qb->orderBy('p.nom', 'ASC');
+        }
+
+        $produits = $qb->getQuery()->getResult();
 
         return $this->render('produit/index.html.twig', [
             'produits' => $produits,
+
+            // ✅ IMPORTANT : catégories globales maintenant
             'categories' => $categorieRepository->findAll(),
+
+            'typePack' => $typePack,
+            'typePacks' => $typePackRepository->findAll(),
         ]);
     }
 

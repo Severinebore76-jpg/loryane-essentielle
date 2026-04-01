@@ -3,7 +3,43 @@
 {% block title %}À propos{% endblock %}
 
 {% block body %}
-    <h1>À propos</h1>
 
-    <p>Loryane Essentielle propose des coffrets bien-être haut de gamme.</p>
+    <!-- HERO COMPACT -->
+    <section class="about-hero">
+        <img src="{{ asset('images/icone_loryane.png') }}" alt="Logo" class="about-logo">
+
+        <h1>
+            Loryane <span>Essentielle®</span>
+        </h1>
+
+        <p class="about-tagline">
+            "Quand la lumière intérieure s’allie à la puissance de la nature"
+        </p>
+    </section>
+
+    <!-- CONTENU -->
+    <section class="about-container">
+
+        <div class="about-card">
+
+            <p>
+                Loryane Essentielle propose des coffrets bien-être haut de gamme,
+                conçus pour accompagner des moments de reconnexion intérieure.
+            </p>
+
+            <p>
+                Chaque pack associe des éléments naturels soigneusement sélectionnés :
+                pierres, huiles essentielles et objets rituels,
+                pour créer une expérience sensorielle unique.
+            </p>
+
+            <p>
+                Pensés comme de véritables instants pour soi,
+                ces coffrets allient esthétique, simplicité et profondeur.
+            </p>
+
+        </div>
+
+    </section>
+
 {% endblock %}

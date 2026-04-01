@@ -4,39 +4,108 @@
 
 {% block body %}
 
-    <h1>Récapitulatif de commande</h1>
+    <section class="cart-container">
 
-    <h2>Produits</h2>
+        <h1 class="cart-title">Récapitulatif de commande</h1>
 
-    <ul>
-        {% for item in panier %}
-            <li>
-                {{ item.produit.nom }} - {{ item.quantite }} x {{ item.produit.prix }} €
-            </li>
-        {% endfor %}
-    </ul>
+        <!-- PRODUITS -->
+        <div class="cart-list">
 
-    <p><strong>Total : {{ total }} €</strong></p>
+            {% for item in panier %}
+                <div class="cart-item">
 
-    <hr>
+                    <!-- IMAGE -->
+                    <div class="cart-image">
+                        <img
+                            src="{{ item.produit.image
+                            ? asset('uploads/' ~ item.produit.image)
+                            : asset('images/default.jpg') }}"
+                            alt="{{ item.produit.nom }}"
+                            onerror="this.src='{{ asset('images/default.jpg') }}'"
+                        >
+                    </div>
 
-    <form method="post" action="{{ path('commande_create') }}">
+                    <!-- INFOS -->
+                    <div class="cart-info">
+                        <h2>{{ item.produit.nom }}</h2>
+                        <p class="cart-price-unit">
+                            {{ item.produit.prix|number_format(2, ',', ' ') }} € / unité
+                        </p>
+                    </div>
 
-        <h2>Choisir une adresse</h2>
+                    <!-- QTE -->
+                    <div class="cart-qty">
+                        x {{ item.quantite }}
+                    </div>
 
-        {% for adresse in adresses %}
-            <div>
-                <input type="radio" name="adresse_id" value="{{ adresse.id }}" required>
-                {{ adresse.prenom }} {{ adresse.nom }} -
-                {{ adresse.adresseComplete }},
-                {{ adresse.codePostal }} {{ adresse.ville }}
+                    <!-- TOTAL -->
+                    <div class="cart-total">
+                        {{ (item.produit.prix * item.quantite)|number_format(2, ',', ' ') }} €
+                    </div>
+
+                </div>
+            {% endfor %}
+
+        </div>
+
+        <!-- TOTAL -->
+        <div class="cart-footer">
+            <div class="cart-total-global">
+                Total : {{ total|number_format(2, ',', ' ') }} €
             </div>
-        {% endfor %}
+        </div>
 
-        <br>
+        <!-- TVA -->
+        <div class="vat-note" style="padding:0 20px;">
+            Prix TTC — ajustement au paiement
+        </div>
 
-        <button type="submit">Confirmer la commande</button>
+        <!-- ADRESSES -->
+        <form method="post" action="{{ path('commande_create') }}">
 
-    </form>
+            <div class="cart-list" style="margin-top:40px;">
+
+                <div class="cart-item" style="flex-direction: column; align-items: flex-start; gap:10px;">
+
+                    <h2 style="color:#8f4930; font-size:18px;">
+                        Choisir une adresse
+                    </h2>
+
+                    {% if adresses is empty %}
+
+                        <p>Aucune adresse disponible.</p>
+
+                        <a href="{{ path('app_adresse_new') }}" class="btn-validate">
+                            Ajouter une adresse
+                        </a>
+
+                    {% else %}
+
+                        {% for adresse in adresses %}
+                            <label style="display:flex; align-items:center; gap:10px; cursor:pointer; font-size:14px; color:#8f4930;">
+                                <input type="radio" name="adresse_id" value="{{ adresse.id }}" required>
+
+                                {{ adresse.prenom }} {{ adresse.nom }} —
+                                {{ adresse.adresseComplete }},
+                                {{ adresse.codePostal }} {{ adresse.ville }}
+                            </label>
+                        {% endfor %}
+
+                    {% endif %}
+
+                </div>
+
+            </div>
+
+            <!-- BOUTON -->
+            <div class="cart-footer">
+                <button type="submit" class="btn-validate">
+                    Confirmer la commande
+                </button>
+            </div>
+
+        </form>
+
+    </section>
 
 {% endblock %}

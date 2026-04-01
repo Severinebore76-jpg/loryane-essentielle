@@ -30,8 +30,17 @@ class AdresseType extends AbstractType
             ->add('pays', TextType::class)
             ->add('nom', TextType::class)
             ->add('prenom', TextType::class)
-        ;
+
+            ->add('type', ChoiceType::class, [
+                'choices' => [
+                    'Adresse de livraison' => 'livraison',
+                    'Adresse de facturation' => 'facturation',
+                    'Livraison et facturation' => 'les_deux',
+                ],
+                'label' => 'Type d’adresse',
+            ]);
     }
+
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([

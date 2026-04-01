@@ -32,7 +32,7 @@ class Produit
     private ?string $image = null;
 
     #[ORM\ManyToOne(inversedBy: 'produits')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(nullable: true)]
     private ?Categorie $categorie = null;
 
     /**
@@ -40,6 +40,10 @@ class Produit
      */
     #[ORM\OneToMany(targetEntity: LigneCommande::class, mappedBy: 'produit')]
     private Collection $ligneCommandes;
+
+    #[ORM\ManyToOne(inversedBy: 'produits')]
+    #[ORM\JoinColumn(nullable: true)]
+    private ?TypePack $typePack = null;
 
     public function __construct()
     {
@@ -147,6 +151,18 @@ class Produit
         if ($ligneCommande->getProduit() === $this) {
             $ligneCommande->setProduit(null);
         }
+
+        return $this;
+    }
+
+    public function getTypePack(): ?TypePack
+    {
+        return $this->typePack;
+    }
+
+    public function setTypePack(?TypePack $typePack): static
+    {
+        $this->typePack = $typePack;
 
         return $this;
     }

@@ -6,13 +6,16 @@
 
     <!-- HEADER VISUEL CATÉGORIE -->
     <section class="catalog-header">
-        <h1>Mini Packs - Pépites Bien-Être</h1>
-        <p>
-            De petites merveilles à glisser dans la poche ou dans le sac pour des instants de reconnexion intérieure.
-        </p>
+        {% if typePack %}
+            <h1>{{ typePack.nom }}</h1>
+            <p>{{ typePack.description }}</p>
+        {% else %}
+            <h1>Tous nos coffrets</h1>
+            <p>Explorez l’ensemble de nos univers bien-être.</p>
+        {% endif %}
     </section>
 
-    <!-- MENU HAMBURGER CATÉGORIES -->
+    <!-- MENU HAMBURGER TYPE PACK -->
     <div class="catalog-menu">
 
         <button id="menu-toggle" class="menu-icon">☰</button>
@@ -20,16 +23,66 @@
         <div id="menu-panel" class="menu-panel">
 
             <a href="{{ path('app_produits') }}"
-               class="{{ app.request.query.get('categorie') is null ? 'active' }}">
-                Toutes
+               class="{{ typePack is null ? 'active' }}">
+                Tous les packs
             </a>
 
-            {% for categorie in categories %}
-                <a href="{{ path('app_produits', {categorie: categorie.id}) }}"
-                   class="{{ app.request.query.get('categorie') == categorie.id ? 'active' }}">
-                    {{ categorie.nom }}
+            {% for pack in typePacks %}
+                <a href="{{ path('app_produits', {slug: pack.slug}) }}"
+                   class="{{ typePack and typePack.id == pack.id ? 'active' }}">
+                    {{ pack.nom }}
                 </a>
             {% endfor %}
+
+        </div>
+
+    </div>
+
+    <!-- FILTRES -->
+    <div class="filters-container">
+
+        <button id="filter-toggle" class="filter-btn">
+            Filtres
+        </button>
+
+        <div id="filter-panel" class="filter-panel">
+
+            <form method="get">
+
+                <label>Catégorie</label>
+                <select name="categorie" class="filter-select">
+                    <option value="">Toutes</option>
+
+                    {% for categorie in categories %}
+                        <option value="{{ categorie.id }}"
+                                {% if app.request.query.get('categorie') == categorie.id %}selected{% endif %}>
+                            {{ categorie.nom }}
+                        </option>
+                    {% endfor %}
+                </select>
+
+                <label>Trier par</label>
+                <select name="tri" class="filter-select">
+                    <option value="">Par défaut</option>
+                    <option value="prix_asc"
+                            {% if app.request.query.get('tri') == 'prix_asc' %}selected{% endif %}>
+                        Prix croissant
+                    </option>
+                    <option value="prix_desc"
+                            {% if app.request.query.get('tri') == 'prix_desc' %}selected{% endif %}>
+                        Prix décroissant
+                    </option>
+                    <option value="nom"
+                            {% if app.request.query.get('tri') == 'nom' %}selected{% endif %}>
+                        Nom A → Z
+                    </option>
+                </select>
+
+                <button type="submit" class="btn-validate">
+                    Appliquer
+                </button>
+
+            </form>
 
         </div>
 
@@ -41,7 +94,6 @@
         {% for produit in produits %}
             <div class="product-card">
 
-                <!-- IMAGE -->
                 <a href="{{ path('produit_show', {
                     id: produit.id,
                     categorie: app.request.query.get('categorie')
@@ -55,7 +107,6 @@
                     >
                 </a>
 
-                <!-- CONTENU -->
                 <div class="product-content">
 
                     <h2 class="product-title">
@@ -72,18 +123,16 @@
                         {{ produit.description|slice(0, 80) }}...
                     </p>
 
-                    {# STOCK UNIQUEMENT ADMIN #}
                     {% if is_granted('ROLE_ADMIN') %}
                         <p class="product-info">Stock : {{ produit.stock }}</p>
                     {% endif %}
 
-                    <!-- BAS CARD -->
                     <div class="product-bottom">
 
                         <div class="product-price-block">
-                    <span class="product-price">
-                        {{ (produit.prix * 1.20)|number_format(2, ',', ' ') }} €
-                    </span>
+                            <span class="product-price">
+                                {{ (produit.prix * 1.20)|number_format(2, ',', ' ') }} €
+                            </span>
                             <p class="vat-note">Prix TTC — ajustement au paiement</p>
                         </div>
 
@@ -101,10 +150,8 @@
 
                 </div>
 
-                <!-- POPUP (OBLIGATOIRE DANS LA CARD) -->
                 <div class="add-popup">Ajouté au panier ✔</div>
 
-                <!-- ADMIN -->
                 {% if is_granted('ROLE_ADMIN') %}
                     <div class="product-actions">
                         <a href="{{ path('produit_edit', {id: produit.id}) }}">Modifier</a>
@@ -129,15 +176,25 @@
     <script>
         document.addEventListener("DOMContentLoaded", function () {
 
-            // MENU HAMBURGER
             const btn = document.getElementById("menu-toggle");
             const panel = document.getElementById("menu-panel");
 
-            btn.addEventListener("click", function () {
-                panel.style.display = panel.style.display === "block" ? "none" : "block";
-            });
+            if (btn) {
+                btn.addEventListener("click", function () {
+                    panel.style.display = panel.style.display === "block" ? "none" : "block";
+                });
+            }
 
-            // PANIER AJAX + POPUP
+            const filterBtn = document.getElementById("filter-toggle");
+            const filterPanel = document.getElementById("filter-panel");
+
+            if (filterBtn) {
+                filterBtn.addEventListener("click", function () {
+                    filterPanel.style.display =
+                        filterPanel.style.display === "block" ? "none" : "block";
+                });
+            }
+
             document.querySelectorAll(".add-to-cart").forEach(button => {
                 button.addEventListener("click", function (e) {
                     e.preventDefault();
@@ -153,9 +210,7 @@
                                 popup.classList.remove("show");
                             }, 2000);
                         });
-
                 });
-
             });
 
         });

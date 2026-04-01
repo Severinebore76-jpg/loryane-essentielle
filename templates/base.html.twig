@@ -7,66 +7,87 @@
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 <body>
-    <header class="header">
-        <div class="header-container">
-            <nav class="nav">
-                {% set route = app.request.attributes.get('_route') %}
 
-                <a href="{{ path('app_home') }}"
-                   class="nav-btn {{ route == 'app_home' ? 'active' }}">
-                    Accueil
-                </a>
+<header class="header">
+    <div class="header-container">
+        <nav class="nav">
+            {% set route = app.request.attributes.get('_route') %}
 
-                <a href="{{ path('app_produits') }}"
-                   class="nav-btn {{ route starts with 'app_produits' ? 'active' }}">
-                    Catalogue
-                </a>
+            <a href="{{ path('app_home') }}"
+               class="nav-btn {{ route == 'app_home' ? 'active' }}">
+                Accueil
+            </a>
 
-                <a href="{{ path('app_panier') }}"
-                   class="nav-btn {{ route starts with 'app_panier' ? 'active' }}">
-                    Mon panier
-                </a>
+            <a href="{{ path('app_produits') }}"
+               class="nav-btn {{ route starts with 'app_produits' ? 'active' }}">
+                Catalogue
+            </a>
 
-                <a href="{{ path('app_profil') }}"
-                   class="nav-btn {{ route starts with 'app_profil' ? 'active' }}">
-                    Mon compte
-                </a>
+            <a href="{{ path('app_panier') }}"
+               class="nav-btn {{ route starts with 'app_panier' ? 'active' }}">
+                Mon panier
+            </a>
 
-                <a href="{{ path('app_about') }}"
-                   class="nav-btn {{ route == 'app_about' ? 'active' }}">
-                    À propos
-                </a>
-            </nav>
-            <div class="header-right">
-                <span class="icon">🔒</span>
-                <span class="icon">🔍</span>
-                <div class="lang-switch">
-                    <span class="lang active">Fr</span>
-                    <span class="lang">En</span>
-                    <span class="lang">Es</span>
-                </div>
+            <a href="{{ path('app_profil') }}"
+               class="nav-btn {{ route starts with 'app_profil' ? 'active' }}">
+                Mon compte
+            </a>
+
+            <a href="{{ path('app_about') }}"
+               class="nav-btn {{ route == 'app_about' ? 'active' }}">
+                À propos
+            </a>
+        </nav>
+
+        <div class="header-right">
+            <span class="icon">🔒</span>
+            <span class="icon">🔍</span>
+
+            <div class="lang-switch">
+                <span class="lang active">Fr</span>
+                <span class="lang">En</span>
+                <span class="lang">Es</span>
             </div>
         </div>
-    </header>
-    <div class="auth-bar">
-        {% if app.user %}
-            <strong>Connecté : {{ app.user.userIdentifier }}</strong>
-            |
-            <a href="{{ path('app_logout') }}">Se déconnecter</a>
-        {% else %}
-            <a href="{{ path('app_login') }}">Se connecter</a>
-        {% endif %}
     </div>
+</header>
 
-    <!-- 🔥 ICI → FLASH MESSAGE -->
-    {% for message in app.flashes('success') %}
-        <div class="flash-success">
-            {{ message }}
-        </div>
-    {% endfor %}
+<div class="auth-bar">
+    {% if app.user %}
+        <strong>Connecté : {{ app.user.userIdentifier }}</strong>
+        |
+        <a href="{{ path('app_logout') }}">Se déconnecter</a>
+    {% else %}
+        <a href="{{ path('app_login') }}">Se connecter</a>
+    {% endif %}
+</div>
+
+{% for message in app.flashes('success') %}
+    <div class="flash-success">{{ message }}</div>
+{% endfor %}
+
+{% for message in app.flashes('error') %}
+    <div class="flash-error">{{ message }}</div>
+{% endfor %}
+
+<!-- 🔥 WRAPPER GLOBAL -->
+<div class="page-background">
 
     <main>
         {% block body %}{% endblock %}
     </main>
+
+    <!-- ✅ FOOTER AU BON ENDROIT -->
+    <footer class="footer">
+        <div class="footer-container">
+            <a href="{{ path('app_mentions') }}">Mentions légales</a>
+            <a href="{{ path('app_cgv') }}">CGV</a>
+            <a href="{{ path('app_contact') }}">Contact</a>
+        </div>
+    </footer>
+
+</div>
+
 </body>
+
 </html>

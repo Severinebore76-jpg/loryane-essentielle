@@ -51,13 +51,16 @@ class Adresse
     #[Assert\NotBlank(message: 'Le prénom est obligatoire')]
     private ?string $prenom = null;
 
+    #[ORM\Column(length: 20)]
+    private ?string $type = null;
+
     #[ORM\ManyToOne(targetEntity: Utilisateur::class, inversedBy: 'adresses')]
     #[ORM\JoinColumn(nullable: false)]
     private ?Utilisateur $utilisateur = null;
 
     // -------------------
     // GETTERS / SETTERS
-    // -------
+    // -------------------
 
     public function getId(): ?int { return $this->id; }
 
@@ -80,10 +83,13 @@ class Adresse
     public function setPays(string $pays): static { $this->pays = $pays; return $this; }
 
     public function getNom(): ?string { return $this->nom; }
-    public function setNom(string $nom): static { $this->nom = mb_strtoupper(trim ($nom), 'UTF-8'); return $this; }
+    public function setNom(string $nom): static { $this->nom = mb_strtoupper(trim($nom), 'UTF-8'); return $this; }
 
     public function getPrenom(): ?string { return $this->prenom; }
     public function setPrenom(string $prenom): static { $this->prenom = mb_convert_case(trim($prenom), MB_CASE_TITLE, 'UTF-8'); return $this; }
+
+    public function getType(): ?string { return $this->type; }
+    public function setType(string $type): static { $this->type = $type; return $this; }
 
     public function getUtilisateur(): ?Utilisateur { return $this->utilisateur; }
     public function setUtilisateur(?Utilisateur $utilisateur): static
@@ -91,6 +97,7 @@ class Adresse
         $this->utilisateur = $utilisateur;
         return $this;
     }
+
     public function getAdresseComplete(): string
     {
         return $this->numero . ' ' . $this->typeVoie . ' ' . $this->nomVoie;

@@ -4,28 +4,73 @@
 
 {% block body %}
 
-    <h1>Mes adresses</h1>
+    <section class="cart-container">
 
-    <a href="{{ path('app_adresse_new') }}">Ajouter une adresse</a>
+        <h1 class="cart-title">Mes adresses</h1>
 
-    {% for adresse in adresses %}
-        <div style="margin-top:20px;">
-            <p>
-                {{ adresse.prenom|capitalize }} {{ adresse.nom|upper }}<br>
-                {{ adresse.numero }} {{ adresse.typeVoie }} {{ adresse.nomVoie }}<br>
-                {{ adresse.codePostal }} {{ adresse.ville }}<br>
-                {{ adresse.pays }}<br>
-            </p>
+        <div class="cart-list">
 
-            <a href="{{ path('app_adresse_edit', {id: adresse.id}) }}">Modifier</a>
+            {% for adresse in adresses %}
+                <div class="cart-item" style="justify-content: space-between; align-items: center;">
 
-            <form method="post" action="{{ path('app_adresse_delete', {id: adresse.id}) }}">
-                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ adresse.id) }}">
-                <button>Supprimer</button>
-            </form>
+                    <!-- INFOS -->
+                    <div class="cart-info">
+                        <h2>{{ adresse.prenom|capitalize }} {{ adresse.nom|upper }}</h2>
+
+                        <p class="cart-category-text">
+                            {{ adresse.numero }} {{ adresse.typeVoie }} {{ adresse.nomVoie }}<br>
+                            {{ adresse.codePostal }} {{ adresse.ville }}<br>
+                            {{ adresse.pays }}<br>
+
+                            <strong>
+                                {% if adresse.type == 'livraison' %}
+                                    Livraison
+                                {% elseif adresse.type == 'facturation' %}
+                                    Facturation
+                                {% else %}
+                                    Livraison & Facturation
+                                {% endif %}
+                            </strong>
+                        </p>
+                    </div>
+
+                    <!-- ACTIONS -->
+                    <div class="cart-actions">
+
+                        <a href="{{ path('app_adresse_edit', {id: adresse.id}) }}" class="btn-validate">
+                            Modifier
+                        </a>
+
+                        <form method="post"
+                              action="{{ path('app_adresse_delete', {id: adresse.id}) }}"
+                              style="display:inline-block; margin:0;">
+
+                            <input type="hidden"
+                                   name="_token"
+                                   value="{{ csrf_token('delete' ~ adresse.id) }}">
+
+                            <button type="submit"
+                                    class="btn-validate"
+                                    style="cursor:pointer;" formnovalidate>
+                                Supprimer
+                            </button>
+                        </form>
+
+                    </div>
+
+                </div>
+            {% else %}
+                <p>Aucune adresse enregistrée.</p>
+            {% endfor %}
+
         </div>
-    {% else %}
-        <p>Aucune adresse enregistrée.</p>
-    {% endfor %}
+
+        <div class="cart-footer">
+            <a href="{{ path('app_adresse_new') }}" class="btn-validate">
+                Ajouter une adresse
+            </a>
+        </div>
+
+    </section>
 
 {% endblock %}

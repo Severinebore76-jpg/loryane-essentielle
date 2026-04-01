@@ -4,13 +4,31 @@
 
 {% block body %}
 
-    <h1>Ajouter une adresse</h1>
+    <section class="cart-container">
 
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button>Enregistrer</button>
-    {{ form_end(form) }}
+        <h1 class="cart-title">Ajouter une adresse</h1>
 
-    <a href="{{ path('app_adresse') }}">Retour</a>
+        <div class="cart-list">
+            <div class="cart-item" style="flex-direction: column; align-items: flex-start;">
+
+                {{ form_start(form) }}
+                {{ form_widget(form) }}
+
+                <button type="submit" class="btn-validate" style="margin-top:20px;">
+                    Enregistrer
+                </button>
+
+                {{ form_end(form) }}
+
+            </div>
+        </div>
+
+        <div class="cart-footer">
+            <a href="{{ path('app_adresse') }}" class="btn-validate">
+                ← Retour
+            </a>
+        </div>
+
+    </section>
 
 {% endblock %}

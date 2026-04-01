@@ -45,7 +45,6 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(targetEntity: Commande::class, mappedBy: 'utilisateur')]
     private Collection $commandes;
     #[ORM\OneToMany(mappedBy: 'utilisateur', targetEntity: Adresse::class)]
-
     /** @var Collection<int, Adresse> */
     private Collection $adresses;
 

@@ -1,18 +1,54 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Modifier profil{% endblock %}
+{% block title %}Modifier mon profil{% endblock %}
 
 {% block body %}
 
-    <h1>Modifier mon profil</h1>
+    <section class="cart-container">
 
-    {{ form_start(form) }}
-    {{ form_row(form.nom) }}
-    {{ form_row(form.prenom) }}
+        <h1 class="cart-title">Modifier mon profil</h1>
 
-    <button type="submit">Enregistrer</button>
-    {{ form_end(form) }}
+        <div class="cart-list">
 
-    <a href="{{ path('app_profil') }}">Retour</a>
+            <div class="cart-item cart-form">
+
+                {{ form_start(form) }}
+
+                <!-- NOM -->
+                <div class="cart-info">
+                    <label class="cart-label">Nom</label>
+                    {{ form_widget(form.nom, {
+                        attr: { class: 'input-field' }
+                    }) }}
+                </div>
+
+                <!-- PRENOM -->
+                <div class="cart-info">
+                    <label class="cart-label">Prénom</label>
+                    {{ form_widget(form.prenom, {
+                        attr: { class: 'input-field' }
+                    }) }}
+                </div>
+
+                <!-- ACTIONS -->
+                <div class="cart-actions" style="margin-top:20px;">
+
+                    <button type="submit" class="btn-validate">
+                        Enregistrer
+                    </button>
+
+                    <a href="{{ path('app_profil') }}" class="btn-validate">
+                        ← Retour
+                    </a>
+
+                </div>
+
+                {{ form_end(form) }}
+
+            </div>
+
+        </div>
+
+    </section>
 
 {% endblock %}

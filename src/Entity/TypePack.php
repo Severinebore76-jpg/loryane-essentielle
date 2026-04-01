@@ -2,14 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\CategorieRepository;
+use App\Repository\TypePackRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
-#[ORM\Entity(repositoryClass: CategorieRepository::class)]
-class Categorie
+#[ORM\Entity(repositoryClass: TypePackRepository::class)]
+class TypePack
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -19,7 +19,7 @@ class Categorie
     #[ORM\Column(length: 255)]
     private ?string $nom = null;
 
-    #[ORM\Column(length: 255, unique: true)]
+    #[ORM\Column(length: 255)]
     private ?string $slug = null;
 
     #[ORM\Column(type: Types::TEXT, nullable: true)]
@@ -28,23 +28,22 @@ class Categorie
     /**
      * @var Collection<int, Produit>
      */
-    #[ORM\OneToMany(targetEntity: Produit::class, mappedBy: 'categorie')]
+    #[ORM\OneToMany(targetEntity: Produit::class, mappedBy: 'typePack')]
     private Collection $produits;
+
+    // ✅ AJOUT
+    #[ORM\OneToMany(mappedBy: 'typePack', targetEntity: Categorie::class)]
+    private Collection $categories;
 
     public function __construct()
     {
         $this->produits = new ArrayCollection();
+        $this->categories = new ArrayCollection();
     }
 
-    public function getId(): ?int
-    {
-        return $this->id;
-    }
+    public function getId(): ?int { return $this->id; }
 
-    public function getNom(): ?string
-    {
-        return $this->nom;
-    }
+    public function getNom(): ?string { return $this->nom; }
 
     public function setNom(string $nom): static
     {
@@ -52,10 +51,7 @@ class Categorie
         return $this;
     }
 
-    public function getSlug(): ?string
-    {
-        return $this->slug;
-    }
+    public function getSlug(): ?string { return $this->slug; }
 
     public function setSlug(string $slug): static
     {
@@ -63,10 +59,7 @@ class Categorie
         return $this;
     }
 
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
+    public function getDescription(): ?string { return $this->description; }
 
     public function setDescription(?string $description): static
     {
@@ -79,24 +72,8 @@ class Categorie
         return $this->produits;
     }
 
-    public function addProduit(Produit $produit): static
+    public function getCategories(): Collection
     {
-        if (!$this->produits->contains($produit)) {
-            $this->produits->add($produit);
-            $produit->setCategorie($this);
-        }
-
-        return $this;
-    }
-
-    public function removeProduit(Produit $produit): static
-    {
-        if ($this->produits->removeElement($produit)) {
-            if ($produit->getCategorie() === $this) {
-                $produit->setCategorie(null);
-            }
-        }
-
-        return $this;
+        return $this->categories;
     }
 }

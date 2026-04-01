@@ -4,40 +4,55 @@
 
 {% block body %}
 
-    <h1>Mes commandes</h1>
+    <section class="cart-container">
 
-    {% if commandes is empty %}
-        <p>Aucune commande pour le moment.</p>
-    {% else %}
+        <h1 class="cart-title">Mes commandes</h1>
 
-        <table border="1" cellpadding="10">
-            <thead>
-            <tr>
-                <th>ID</th>
-                <th>Date</th>
-                <th>Statut</th>
-                <th>Total</th>
-                <th>Détail</th>
-            </tr>
-            </thead>
+        {% for message in app.flashes('success') %}
+            <p style="color:#8f4930; margin-bottom:20px;">
+                {{ message }}
+            </p>
+        {% endfor %}
 
-            <tbody>
-            {% for commande in commandes %}
-                <tr>
-                    <td>#{{ commande.id }}</td>
-                    <td>{{ commande.date|date('d/m/Y H:i') }}</td>
-                    <td>{{ commande.statut }}</td>
-                    <td>{{ commande.total }} €</td>
-                    <td>
-                        <a href="{{ path('commande_detail', {id: commande.id}) }}">
-                            Voir
-                        </a>
-                    </td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
+        {% if commandes is empty %}
+            <p class="cart-empty">Aucune commande pour le moment</p>
+        {% else %}
 
-    {% endif %}
+            <div class="cart-list">
+
+                {% for commande in commandes %}
+                    <div class="cart-item">
+
+                        <!-- INFOS -->
+                        <div class="cart-info">
+                            <h2>Commande #{{ commande.id }}</h2>
+                            <p class="cart-category-text">
+                                {{ commande.date|date('d/m/Y H:i') }}
+                            </p>
+                            <p class="cart-category-text">
+                                Statut : {{ commande.statut }}
+                            </p>
+                        </div>
+
+                        <!-- TOTAL -->
+                        <div class="cart-total">
+                            {{ commande.total|number_format(2, ',', ' ') }} €
+                        </div>
+
+                        <!-- ACTION -->
+                        <div class="cart-actions">
+                            <a href="{{ path('commande_detail', {id: commande.id}) }}">
+                                Voir
+                            </a>
+                        </div>
+
+                    </div>
+                {% endfor %}
+
+            </div>
+
+        {% endif %}
+
+    </section>
 
 {% endblock %}
