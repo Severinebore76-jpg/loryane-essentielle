@@ -45,7 +45,7 @@ class CommandeController extends AbstractController
         EntityManagerInterface $em
     ): Response {
 
-        // 🔥 IMPORTANT : on utilise getPanierComplet
+        // IMPORTANT : on utilise getPanierComplet
         $panier = $panierService->getPanierComplet($produitRepository);
 
         if (empty($panier)) {
@@ -54,7 +54,7 @@ class CommandeController extends AbstractController
         }
 
         // =========================
-        // 🔥 1. VALIDATION
+        // VALIDATION
         // =========================
         foreach ($panier as $item) {
 
@@ -78,7 +78,7 @@ class CommandeController extends AbstractController
         }
 
         // =========================
-        // 🔥 2. ADRESSE
+        // ADRESSE
         // =========================
         $adresseId = $request->request->get('adresse_id');
         $adresse = $adresseRepository->find($adresseId);
@@ -89,7 +89,7 @@ class CommandeController extends AbstractController
         }
 
         // =========================
-        // 🔥 3. COMMANDE
+        // COMMANDE
         // =========================
         $commande = new Commande();
 
@@ -104,12 +104,12 @@ class CommandeController extends AbstractController
         $em->persist($commande);
 
         // =========================
-        // 🔥 4. LIGNES DE COMMANDE
+        // LIGNES DE COMMANDE
         // =========================
         foreach ($panier as $item) {
 
             $produit = $item['produit'];
-            $quantite = $item['quantite']; // ✅ CORRECT
+            $quantite = $item['quantite']; //
 
             $ligne = new LigneCommande();
 
@@ -121,15 +121,17 @@ class CommandeController extends AbstractController
             $em->persist($ligne);
         }
         // =========================
-        // 🔥 5. FINALISATION
+        // FINALISATION
         // =========================
         $em->flush();
 
         $panierService->clear();
 
-        $this->addFlash('success', 'Commande validée avec succès');
+        $this->addFlash('order_success', 'Commande validée avec succès');
 
-        return $this->redirectToRoute('commande_list');
+        return $this->redirectToRoute('commande_detail', [
+            'id' => $commande->getId()
+        ]);
     }
     #[Route('/mes-commandes', name: 'commande_list')]
     public function list(EntityManagerInterface $em): Response

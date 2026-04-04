@@ -3,26 +3,41 @@
 {% block title %}Commande #{{ commande.id }}{% endblock %}
 
 {% block body %}
-
+    <!-- INFOS COMMANDE -->
     <section class="cart-container">
 
-        <h1 class="cart-title">Commande #{{ commande.id }}</h1>
+        <h1 class="cart-title order-title">
+            Commande #{{ commande.id }}
 
-        <!-- INFOS COMMANDE -->
+            {% for message in app.flashes('order_success') %}
+                <span class="order-badge">
+            ✔ enregistrée
+        </span>
+            {% endfor %}
+        </h1>
         <div class="cart-list">
             <div class="cart-item">
 
                 <div class="cart-info">
                     <h2>Date</h2>
-                    <p class="cart-category-text">
+                    <p class="cart-date">
                         {{ commande.date|date('d/m/Y H:i') }}
                     </p>
                 </div>
 
                 <div class="cart-info">
                     <h2>Statut</h2>
-                    <p class="cart-category-text">
-                        {{ commande.statut }}
+                    <p class="cart-address">
+                        {% set statutLabel = {
+                            'pending': 'En attente',
+                            'paid': 'Payée',
+                            'shipped': 'Expédiée',
+                            'cancelled': 'Annulée'
+                        }[commande.statut] ?? commande.statut %}
+
+                        <span class="status status-{{ commande.statut }}">
+    {{ statutLabel }}
+</span>
                     </p>
                 </div>
 
@@ -79,12 +94,9 @@
             <div class="cart-item">
 
                 <div class="cart-info">
-                    <strong>
-                        {{ commande.adresse.prenom }} {{ commande.adresse.nom }}
-                    </strong>
-
-                    <p class="cart-category-text">
-                        {{ commande.adresse.numero }} {{ commande.adresse.typeVoie }} {{ commande.adresse.nomVoie }}<br>
+                    <p class="cart-address">
+                        <strong>{{ commande.adresse.prenom }} {{ commande.adresse.nom }}</strong><br>
+                     {{ commande.adresse.numero }} {{ commande.adresse.typeVoie }} {{ commande.adresse.nomVoie }}<br>
                         {{ commande.adresse.codePostal }} {{ commande.adresse.ville }}<br>
                         {{ commande.adresse.pays }}
                     </p>

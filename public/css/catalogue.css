@@ -1,0 +1,287 @@
+/* =====================================================
+   CATALOGUE
+===================================================== */
+.catalog-header {
+    background: radial-gradient(circle at top, #f1ddd7 20%, #f8f5f3 50%);
+    text-align: center;
+    padding: 25px 20px;
+    margin-bottom: 30px;
+}
+
+.catalog-header h1 {
+    color: #8f4930;
+    font-size: 24px;
+    margin-bottom: 10px;
+}
+.catalog-header p {
+    color: #8f4930;
+    font-size: 15px;
+}
+/* GRID */
+.products-grid {
+    padding: 20px 40px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 30px;
+    justify-content: center;
+}
+/* CARD */
+.product-card {
+    width: 260px;
+    background: #f4e7e3;
+    border-radius: 20px;
+    padding: 18px;
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+
+    transition: all 0.3s ease;
+}
+
+.product-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.08);
+}
+
+/* IMAGE */
+.product-card img {
+    width: 100%;
+    height: 160px;
+    object-fit: cover;
+    border-radius: 12px;
+    margin-bottom: 10px;
+}
+
+/* CONTENT */
+.product-content {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+
+/* TITLE */
+.product-title {
+    text-align: center;
+    margin: 12px 0 2px;
+    font-size: 22px;
+}
+
+.product-title a {
+    display: inline-block;
+    color: #8f4930;
+    text-decoration: none;
+}
+
+/* CATEGORY */
+.product-category {
+    display: inline-block;
+    font-size: 18px;
+    color: #8f4930;
+    background: rgba(143, 73, 48, 0.08);
+    padding: 4px 10px;
+    border-radius: 12px;
+    margin-bottom: 8px;
+    font-weight: 500;
+    text-align: center;
+    transition: all 0.2s ease;
+}
+
+.product-category:hover {
+    background: rgba(143, 73, 48, 0.15);
+}
+
+/* DESCRIPTION */
+.product-description {
+    font-size: 13px;
+    color: #8f4930;
+    margin: 8px 0;
+}
+
+/* BOTTOM */
+.product-bottom {
+    margin-top: auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap:10px;
+}
+
+/* PRICE */
+.product-price {
+    font-weight: bold;
+    color: #8f4930;
+    font-size: 16px;
+}
+
+.vat-note {
+    font-size: 11px;
+    font-style: italic;
+    color: #8f4930;
+    opacity: 0.7;
+    margin-top: 2px;
+}
+
+/* CART */
+.cart-icon {
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+    color: inherit;
+}
+
+/* =====================================================
+   MENU
+===================================================== */
+.catalog-menu {
+    position: relative;
+    padding: 0 40px;
+}
+
+.menu-icon {
+    font-size: 24px;
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: #8f4930;
+}
+
+.menu-panel {
+    position: absolute;
+    top: 35px;
+    left: 40px;
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 15px;
+    display: none;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+    z-index: 10;
+}
+
+.menu-panel a {
+    display: block;
+    margin-bottom: 8px;
+    color: #8f4930;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.menu-panel a.active {
+    font-weight: bold;
+}
+
+/* =====================================================
+   POPUP
+===================================================== */
+.add-popup {
+    position: absolute;
+    bottom: 15px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #8f4930;
+    color: white;
+    padding: 8px 14px;
+    border-radius: 20px;
+    font-size: 12px;
+    opacity: 0;
+    transition: all 0.3s ease;
+}
+
+.add-popup.show {
+    opacity: 1;
+    transform: translateX(-50%) translateY(-10px);
+}
+/* ===============
+   FILTRES
+================== */
+
+/* CONTAINER */
+.filters-container {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 30px;
+    position: relative;
+}
+
+/* BOUTON */
+.filter-btn {
+    padding: 10px 20px;
+    border: 2px solid #8f4930;
+    border-radius: 25px;
+    background: transparent;
+    color: #8f4930;
+    cursor: pointer;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+    background: rgba(143, 73, 48, 0.08);
+}
+
+/* PANEL */
+.filter-panel {
+    display: none;
+    position: absolute;
+    top: 50px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #ffffff;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 12px 30px rgba(0,0,0,0.15);
+    z-index: 1000;
+    min-width: 240px;
+}
+
+/* FORM */
+.filter-panel form {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+/* LABEL */
+.filter-panel label {
+    font-size: 13px;
+    color: #8f4930;
+    opacity: 0.8;
+}
+
+/* SELECT UNIFIÉ */
+.filter-panel select {
+    padding: 8px 14px;
+    border: 1px solid #8f4930;
+    border-radius: 20px;
+    color: #8f4930;
+    font-weight: 500;
+    background: transparent;
+    font-size: 14px;
+    width: 100%;
+    appearance: none;
+}
+
+.filter-panel select:hover {
+    background: rgba(143, 73, 48, 0.08);
+}
+
+/* BOUTON APPLY */
+.filter-panel .btn-validate {
+    margin-top: 10px;
+    background: #8f4930;
+    color: white;
+    border: none;
+    padding: 10px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.filter-panel .btn-validate:hover {
+    opacity: 0.9;
+}

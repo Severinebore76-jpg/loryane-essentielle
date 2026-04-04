@@ -31,23 +31,36 @@
                             <h2>{{ item.produit.nom }}</h2>
                             <p class="cart-category">{{ item.produit.categorie.nom }}</p>
                             <p class="cart-price-unit">
-                                {{ (item.produit.prix * 1.20)|number_format(2, ',', ' ') }} € / unité
+                                {{ (item.produit.prix)|number_format(2, ',', ' ') }} € / unité
                             </p>
                         </div>
 
                         <!-- QUANTITÉ -->
                         <div class="cart-qty">
-                            x {{ item.quantite }}
+                            <a href="{{ path('panier_decrease', {
+                                id: item.produit.id,
+                                redirect: 'panier'
+                            }) }}">➖</a>
+
+                            <span>{{ item.quantite }}</span>
+
+                            <a href="{{ path('panier_add', {
+                                id: item.produit.id,
+                                redirect: 'panier'
+                            }) }}">➕</a>
                         </div>
 
                         <!-- TOTAL -->
                         <div class="cart-total">
-                            {{ ((item.produit.prix * item.quantite) * 1.20)|number_format(2, ',', ' ') }} €
+                            {{ ((item.produit.prix * item.quantite))|number_format(2, ',', ' ') }} €
                         </div>
 
                         <!-- ACTION -->
                         <div class="cart-actions">
-                            <a href="{{ path('panier_remove', {id: item.produit.id}) }}">🧺</a>
+                            <a href="{{ path('panier_remove', {
+                                id: item.produit.id,
+                                redirect: 'panier'
+                            }) }}" class="cart-remove">🧺</a>
                         </div>
 
                     </div>
@@ -61,7 +74,7 @@
                     Total : {{ total|number_format(2, ',', ' ') }} €
                 </div>
 
-                <form method="post" action="{{ path('commande_recap') }}">
+                <form method="post" action="{{ path('panier_valider') }}">
                     <button type="submit" class="btn-validate">
                         Valider mon panier
                     </button>

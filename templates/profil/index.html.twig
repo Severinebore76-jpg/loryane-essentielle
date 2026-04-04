@@ -4,70 +4,58 @@
 
 {% block body %}
 
-    <section class="cart-container">
+    <section class="profile-container">
 
         <h1 class="cart-title">Mon profil</h1>
 
         <!-- CARD PROFIL -->
-        <div class="cart-list">
-            <div class="cart-item" style="justify-content: space-between;">
+        <div class="profile-card">
 
-                <div class="cart-info">
-                    <span class="cart-label">Email</span>
-                    <p>{{ user.email }}</p>
-                </div>
-
-                <div class="cart-info">
-                    <span class="cart-label">Nom</span>
-                    <p>{{ user.nom }}</p>
-                </div>
-
-                <div class="cart-info">
-                    <span class="cart-label">Prénom</span>
-                    <p>{{ user.prenom }}</p>
-                </div>
-
+            <div class="profile-item">
+                <span>Email</span>
+                <strong>{{ user.email }}</strong>
             </div>
+
+            <div class="profile-item">
+                <span>Nom</span>
+                <strong>{{ user.nom }}</strong>
+            </div>
+
+            <div class="profile-item">
+                <span>Prénom</span>
+                <strong>{{ user.prenom }}</strong>
+            </div>
+
         </div>
 
         <!-- CTA -->
         <div class="cart-footer">
-            <a href="{{ path('app_profil_edit') }}" class="btn-validate">
+            <a href="{{ path('app_profil_edit') }}" class="btn-profile">
                 Modifier mon profil
             </a>
         </div>
 
-        <!-- MON COMPTE -->
+        <!-- ESPACE -->
         <h2 class="cart-title" style="margin-top:50px;">Mon espace</h2>
 
-        <div class="cart-list">
+        <div class="account-grid">
 
             <!-- COMMANDES -->
-            <div class="cart-item" style="justify-content: space-between; align-items: center;">
-
-                <div class="cart-info">
-                    <h2>Mes commandes</h2>
-                    <p class="cart-category-text">Suivre et consulter vos achats</p>
-                </div>
-
-                <a href="{{ path('commande_list') }}" class="btn-validate">
-                    Voir
+            <div class="account-card">
+                <h3>Mes commandes</h3>
+                <p>Suivre et consulter vos achats</p>
+                <a href="{{ path('commande_list') }}" class="btn-account">
+                    Voir →
                 </a>
-
             </div>
 
             <!-- ADRESSES -->
-            <div class="cart-item" style="justify-content: space-between; align-items: center;">
-
-                <div class="cart-info">
-                    <h2>Mes adresses</h2>
-                    <p class="cart-category-text">Gérer vos différentes adresses</p>
-                </div>
-
-                <a href="{{ path('app_adresse') }}" class="btn-validate">
-                    Gérer
+            <div class="account-card">
+                <h3>Mes adresses</h3>
+                <p>Gérer vos différentes adresses</p>
+                <a href="{{ path('app_adresse') }}" class="btn-account">
+                    Gérer →
                 </a>
-
             </div>
 
         </div>

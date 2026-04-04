@@ -1,10 +1,17 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}Loryane{% endblock %}</title>
 
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/accueil.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/profil.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/about.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/catalogue.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/panier.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/produit.css') }}">
+
 </head>
 <body>
 
@@ -63,12 +70,20 @@
 </div>
 
 {% for message in app.flashes('success') %}
-    <div class="flash-success">{{ message }}</div>
+    <div class="flash flash-success">{{ message }}</div>
 {% endfor %}
 
 {% for message in app.flashes('error') %}
-    <div class="flash-error">{{ message }}</div>
+    <div class="flash flash-error">{{ message }}</div>
 {% endfor %}
+
+{% if app.request.attributes.get('_route') != 'commande_detail' %}
+    {% for message in app.flashes('order_success') %}
+        <div class="flash flash-order">
+            {{ message }}
+        </div>
+    {% endfor %}
+{% endif %}
 
 <!-- 🔥 WRAPPER GLOBAL -->
 <div class="page-background">

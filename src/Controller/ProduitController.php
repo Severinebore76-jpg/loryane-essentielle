@@ -5,7 +5,6 @@ namespace App\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\Routing\Attribute\Route;
 use App\Repository\ProduitRepository;
 use App\Repository\CategorieRepository;
@@ -25,6 +24,7 @@ final class ProduitController extends AbstractController
         CategorieRepository $categorieRepository,
         TypePackRepository $typePackRepository,
         Request $request,
+        PanierService $panierService,
         ?string $slug
     ): Response {
 
@@ -33,7 +33,7 @@ final class ProduitController extends AbstractController
 
         $typePack = null;
 
-        // 🔹 Récupération du type pack
+        // Récupération du type pack
         if ($slug) {
             $typePack = $typePackRepository->findOneBy(['slug' => $slug]);
 
@@ -42,24 +42,24 @@ final class ProduitController extends AbstractController
             }
         }
 
-        // 🔹 QueryBuilder
+        // QueryBuilder
         $qb = $produitRepository->createQueryBuilder('p')
             ->leftJoin('p.categorie', 'c')
             ->leftJoin('p.typePack', 't');
 
-        // 🔹 FILTRE TYPE PACK
+        // FILTRE TYPE PACK
         if ($typePack) {
             $qb->andWhere('p.typePack = :typePack')
                 ->setParameter('typePack', $typePack);
         }
 
-        // 🔹 FILTRE CATÉGORIE
+        // FILTRE CATÉGORIE
         if ($categorieId) {
             $qb->andWhere('p.categorie = :categorie')
                 ->setParameter('categorie', $categorieId);
         }
 
-        // 🔹 TRI
+        // TRI
         if ($tri === 'prix_asc') {
             $qb->orderBy('p.prix', 'ASC');
         } elseif ($tri === 'prix_desc') {
@@ -72,12 +72,10 @@ final class ProduitController extends AbstractController
 
         return $this->render('produit/index.html.twig', [
             'produits' => $produits,
-
-            // ✅ IMPORTANT : catégories globales maintenant
             'categories' => $categorieRepository->findAll(),
-
             'typePack' => $typePack,
             'typePacks' => $typePackRepository->findAll(),
+            'panierSession' => $panierService->getPanier(),
         ]);
     }
 
@@ -184,14 +182,6 @@ final class ProduitController extends AbstractController
             'produit' => $produit,
             'categorie' => $request->query->get('categorie'),
         ]);
-    }
-
-    #[Route('/panier/add/{id}', name: 'panier_add')]
-    public function addToCart(int $id, PanierService $panierService): Response
-    {
-        $panierService->add($id);
-
-        return new JsonResponse(['success' => true]);
     }
 
     #[Route('/panier/update/{id}/{quantite}', name: 'panier_update')]

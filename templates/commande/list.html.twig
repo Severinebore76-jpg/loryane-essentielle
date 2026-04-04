@@ -25,12 +25,20 @@
 
                         <!-- INFOS -->
                         <div class="cart-info">
-                            <h2>Commande #{{ commande.id }}</h2>
-                            <p class="cart-category-text">
-                                {{ commande.date|date('d/m/Y H:i') }}
-                            </p>
-                            <p class="cart-category-text">
-                                Statut : {{ commande.statut }}
+                            <h2>
+                                Commande #{{ commande.id }}
+                                <span class="cart-date-inline"> {{ commande.date|date('d/m/Y H:i') }}</span>
+                            </h2>
+                            {% set statutLabel = {
+                                'pending': 'En attente',
+                                'paid': 'Payée',
+                                'shipped': 'Expédiée',
+                                'cancelled': 'Annulée'
+                            }[commande.statut] ?? commande.statut %}
+
+                            <p class="cart-category">
+                                Statut :
+                                <span class="status status-{{ commande.statut }}">{{ statutLabel }}</span>
                             </p>
                         </div>
 
@@ -44,6 +52,7 @@
                             <a href="{{ path('commande_detail', {id: commande.id}) }}">
                                 Voir
                             </a>
+
                         </div>
 
                     </div>
@@ -52,7 +61,9 @@
             </div>
 
         {% endif %}
-
+        <a href="{{ path('app_profil') }}" class="btn-retour">
+            ← Retour au profil
+        </a>
     </section>
 
 {% endblock %}

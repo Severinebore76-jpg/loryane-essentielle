@@ -94,6 +94,8 @@
         {% for produit in produits %}
             <div class="product-card">
 
+                {% set quantite = panierSession[produit.id] ?? 0 %}
+
                 <a href="{{ path('produit_show', {
                     id: produit.id,
                     categorie: app.request.query.get('categorie')
@@ -131,17 +133,20 @@
 
                         <div class="product-price-block">
                             <span class="product-price">
-                                {{ (produit.prix * 1.20)|number_format(2, ',', ' ') }} €
+                                {{ (produit.prix)|number_format(2, ',', ' ') }} €
                             </span>
                             <p class="vat-note">Prix TTC — ajustement au paiement</p>
                         </div>
 
                         {% if produit.stock > 0 %}
+
+                            <!-- AJOUT PANIER -->
                             <a href="#"
                                class="cart-icon add-to-cart"
                                data-url="{{ path('panier_add', {id: produit.id}) }}">
                                 🧺
                             </a>
+
                         {% else %}
                             <span class="out-of-stock">Rupture</span>
                         {% endif %}

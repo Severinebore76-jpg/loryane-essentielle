@@ -4,48 +4,35 @@
 
 {% block body %}
 
-    <section class="cart-container">
+    <section class="profile-container">
 
-        <h1 class="cart-title">Modifier mon profil</h1>
+        <h1>Modifier mon profil</h1>
 
-        <div class="cart-list">
+        <div class="profile-form">
 
-            <div class="cart-item cart-form">
+            {{ form_start(form) }}
 
-                {{ form_start(form) }}
-
-                <!-- NOM -->
-                <div class="cart-info">
-                    <label class="cart-label">Nom</label>
-                    {{ form_widget(form.nom, {
-                        attr: { class: 'input-field' }
-                    }) }}
-                </div>
-
-                <!-- PRENOM -->
-                <div class="cart-info">
-                    <label class="cart-label">Prénom</label>
-                    {{ form_widget(form.prenom, {
-                        attr: { class: 'input-field' }
-                    }) }}
-                </div>
-
-                <!-- ACTIONS -->
-                <div class="cart-actions" style="margin-top:20px;">
-
-                    <button type="submit" class="btn-validate">
-                        Enregistrer
-                    </button>
-
-                    <a href="{{ path('app_profil') }}" class="btn-validate">
-                        ← Retour
-                    </a>
-
-                </div>
-
-                {{ form_end(form) }}
-
+            <div class="form-group">
+                <label>Nom</label>
+                {{ form_widget(form.nom, { attr: { class: 'input-field' } }) }}
             </div>
+
+            <div class="form-group">
+                <label>Prénom</label>
+                {{ form_widget(form.prenom, { attr: { class: 'input-field' } }) }}
+            </div>
+
+            <div class="actions">
+                <button type="submit" class="btn-validate">
+                    Enregistrer
+                </button>
+
+                <a href="{{ path('app_profil') }}" class="btn-validate">
+                    ← Retour
+                </a>
+            </div>
+
+            {{ form_end(form) }}
 
         </div>
 

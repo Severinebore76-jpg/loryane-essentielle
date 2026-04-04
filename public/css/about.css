@@ -1,0 +1,120 @@
+/* =====================================================
+   ABOUT CONTENT
+===================================================== */
+
+.about-container {
+    max-width: 900px;
+    margin: 60px auto;
+    padding: 0 20px;
+}
+
+.about-card {
+    background: #ffffff;
+    padding: 40px;
+    border-radius: 20px;
+    line-height: 1.8;
+    color: #5a3a30;
+
+    box-shadow: 0 15px 40px rgba(0,0,0,0.08);
+    position: relative;
+}
+
+.about-card::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 6px;
+    width: 100%;
+    background: #8f4930;
+    border-radius: 20px 20px 0 0;
+}
+.about-hero {
+    text-align: center;
+    padding: 10px 20px 40px;
+    background: radial-gradient(circle at top, #f1ddd7 20%, #f8f5f3 50%);
+}
+
+.about-logo {
+    width: 240px;
+    margin-bottom: 10px;
+}
+
+.about-hero h1 {
+    font-size: clamp(26px, 5vw, 42px);
+    color: #8f4930;
+    margin-bottom: 10px;
+    letter-spacing: 1px;
+}
+
+.about-hero h1 span {
+    font-size: clamp(16px, 3vw, 20px);
+    font-style: italic;
+    font-weight: 400;
+    margin-left: -4px;
+    position: relative;
+}
+
+.about-tagline {
+    margin: 14px 0;
+    font-size: clamp(16px, 3vw, 20px);
+    color: #8f4930;
+}
+
+.link-pill {
+    padding: 10px 18px;
+    border-radius: 25px;
+    border: 1px solid #8f4930;
+    color: #8f4930;
+    text-decoration: none;
+    font-size: 14px;
+    transition: all 0.2s ease;
+}
+
+.link-pill:hover {
+    background: #8f4930;
+    color: white;
+}
+/* =====================================================
+   LINKS PREMIUM
+===================================================== */
+.about-links {
+    margin-top: 40px;
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+/* =====================================================
+   RESPONSIVE
+===================================================== */
+@media (max-width: 768px) {
+
+    .about-hero {
+        padding: 30px 15px;
+    }
+    .about-logo {
+        width: 140px;
+    }
+    .about-hero h1 {
+        font-size: 26px;
+    }
+    .about-hero h1 span {
+        font-size: 26px;
+    }
+    .about-container {
+        margin: 30px auto;
+    }
+    .about-card {
+        padding: 20px;
+        font-size: 14px;
+    }
+    .about-links {
+        gap: 10px;
+    }
+    .link-pill {
+        font-size: 13px;
+        padding: 8px 14px;
+    }
+}
