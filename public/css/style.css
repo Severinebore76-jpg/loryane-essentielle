@@ -47,6 +47,8 @@ body {
 .icon {
     font-size: 18px;
     cursor: pointer;
+    text-decoration: none !important;
+    color: inherit;
 }
 /* LANG SWITCH */
 .lang-switch {
@@ -77,6 +79,23 @@ body {
     color: #8f4930;
     text-decoration: underline;
     font-weight: 500;
+}
+.search-form {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.search-input {
+    padding: 6px 10px;
+    border-radius: 20px;
+    border: 1px solid #8f4930;
+    font-size: 13px;
+    outline: none;
+}
+
+.search-input:focus {
+    border-color: #8f4930;
 }
 /* =====================================================
    FOOTER

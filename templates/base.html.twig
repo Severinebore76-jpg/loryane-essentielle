@@ -47,9 +47,15 @@
         </nav>
 
         <div class="header-right">
-            <span class="icon">🔒</span>
-            <span class="icon">🔍</span>
-
+            {% if app.user %}
+                <a href="{{ path('app_logout') }}" class="icon">🔓</a>
+            {% else %}
+                <a href="{{ path('app_login') }}" class="icon">🔒</a>
+            {% endif %}
+            <form action="{{ path('app_produits') }}" method="get" class="search-form">
+                <input type="text" name="q" placeholder="Rechercher..." class="search-input">
+                <button type="submit" class="icon">🔍</button>
+            </form>
             <div class="lang-switch">
                 <span class="lang active">Fr</span>
                 <span class="lang">En</span>

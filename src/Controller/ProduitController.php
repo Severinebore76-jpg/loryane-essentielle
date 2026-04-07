@@ -30,6 +30,7 @@ final class ProduitController extends AbstractController
 
         $categorieId = $request->query->get('categorie');
         $tri = $request->query->get('tri');
+        $q = $request->query->get('q'); // 🔥 AJOUT RECHERCHE
 
         $typePack = null;
 
@@ -46,6 +47,17 @@ final class ProduitController extends AbstractController
         $qb = $produitRepository->createQueryBuilder('p')
             ->leftJoin('p.categorie', 'c')
             ->leftJoin('p.typePack', 't');
+
+        // RECHERCHE
+        if ($q) {
+            $qb->andWhere('
+        p.nom LIKE :q
+        OR p.description LIKE :q
+        OR c.nom LIKE :q
+        OR t.nom LIKE :q
+    ')
+                ->setParameter('q', '%' . $q . '%');
+        }
 
         // FILTRE TYPE PACK
         if ($typePack) {
