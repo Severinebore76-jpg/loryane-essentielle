@@ -93,9 +93,30 @@ body {
     font-size: 13px;
     outline: none;
 }
-
+.search-btn {
+    background: none;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    font-size: 16px;
+    color: #8f4930;
+    padding: 0;
+}
 .search-input:focus {
     border-color: #8f4930;
+}
+/* =====================================================
+   CONTACT
+===================================================== */
+.btn-profile {
+    outline: none;
+    box-shadow: none;
+    border: none;
+}
+
+.btn-profile:focus {
+    box-shadow: none;
+
 }
 /* =====================================================
    FOOTER

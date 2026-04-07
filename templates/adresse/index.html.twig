@@ -4,20 +4,20 @@
 
 {% block body %}
 
-    <section class="cart-container">
+    <section class="address-container">
 
-        <h1 class="cart-title">Mes adresses</h1>
+        <h1 class="address-title">Mes adresses</h1>
 
-        <div class="cart-list">
+        <div class="address-list">
 
             {% for adresse in adresses %}
-                <div class="cart-item" style="justify-content: space-between; align-items: center;">
+                <div class="address-item">
 
                     <!-- INFOS -->
-                    <div class="cart-info">
+                    <div class="address-info">
                         <h2>{{ adresse.prenom|capitalize }} {{ adresse.nom|upper }}</h2>
 
-                        <p class="cart-category-text">
+                        <p class="address-text">
                             {{ adresse.numero }} {{ adresse.typeVoie }} {{ adresse.nomVoie }}<br>
                             {{ adresse.codePostal }} {{ adresse.ville }}<br>
                             {{ adresse.pays }}<br>
@@ -35,23 +35,20 @@
                     </div>
 
                     <!-- ACTIONS -->
-                    <div class="cart-actions">
+                    <div class="address-actions">
 
-                        <a href="{{ path('app_adresse_edit', {id: adresse.id}) }}" class="btn-validate">
+                        <a href="{{ path('app_adresse_edit', {id: adresse.id}) }}" class="address-btn">
                             Modifier
                         </a>
 
                         <form method="post"
-                              action="{{ path('app_adresse_delete', {id: adresse.id}) }}"
-                              style="display:inline-block; margin:0;">
+                              action="{{ path('app_adresse_delete', {id: adresse.id}) }}">
 
                             <input type="hidden"
                                    name="_token"
                                    value="{{ csrf_token('delete' ~ adresse.id) }}">
 
-                            <button type="submit"
-                                    class="btn-validate"
-                                    style="cursor:pointer;" formnovalidate>
+                            <button type="submit" class="address-btn" formnovalidate>
                                 Supprimer
                             </button>
                         </form>
@@ -60,19 +57,23 @@
 
                 </div>
             {% else %}
-                <p>Aucune adresse enregistrée.</p>
+                <p class="address-empty">Aucune adresse enregistrée.</p>
             {% endfor %}
 
         </div>
 
-        <div class="cart-footer">
-            <a href="{{ path('app_adresse_new') }}" class="btn-validate">
+        <div class="address-footer">
+            <a href="{{ path('app_adresse_new') }}" class="address-btn">
                 Ajouter une adresse
             </a>
         </div>
-        <a href="{{ path('app_profil') }}" class="btn-retour">
-            ← Retour au profil
-        </a>
+
+        <div class="address-back">
+            <a href="{{ path('app_profil') }}">
+                ← Retour au profil
+            </a>
+        </div>
+
     </section>
 
 {% endblock %}
