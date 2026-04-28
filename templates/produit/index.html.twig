@@ -4,7 +4,7 @@
 
 {% block body %}
 
-    <!-- HEADER VISUEL CATÉGORIE -->
+    <!-- HEADER -->
     <section class="catalog-header">
         {% if typePack %}
             <h1>{{ typePack.nom }}</h1>
@@ -15,76 +15,88 @@
         {% endif %}
     </section>
 
-    <!-- MENU HAMBURGER TYPE PACK -->
-    <div class="catalog-menu">
+    <!-- 🔥 TOOLBAR PROPRE -->
+    <div class="catalog-toolbar">
 
-        <button id="menu-toggle" class="menu-icon">☰</button>
+        <div class="toolbar-left">
+            <button id="menu-toggle" class="menu-icon">☰</button>
+        </div>
 
-        <div id="menu-panel" class="menu-panel">
+        <div class="toolbar-center">
+            <button id="filter-toggle" class="filter-btn">
+                Filtres
+            </button>
+        </div>
 
-            <a href="{{ path('app_produits') }}"
-               class="{{ typePack is null ? 'active' }}">
-                Tous les packs
-            </a>
-
-            {% for pack in typePacks %}
-                <a href="{{ path('app_produits', {slug: pack.slug}) }}"
-                   class="{{ typePack and typePack.id == pack.id ? 'active' }}">
-                    {{ pack.nom }}
+        <div class="toolbar-right">
+            {% if is_granted('ROLE_ADMIN') %}
+                <a href="{{ path('admin_dashboard') }}" class="btn btn-outline btn-sm">
+                    ← Retour admin
                 </a>
-            {% endfor %}
-
+                <a href="{{ path('produit_new') }}" class="admin-card">
+                    <h2>Ajouter un produit</h2>
+                </a>
+            {% endif %}
         </div>
 
     </div>
 
-    <!-- FILTRES -->
-    <div class="filters-container">
+    <!-- MENU PANEL -->
+    <div id="menu-panel" class="menu-panel">
 
-        <button id="filter-toggle" class="filter-btn">
-            Filtres
-        </button>
+        <a href="{{ path('app_produits') }}"
+           class="{{ typePack is null ? 'active' }}">
+            Tous les packs
+        </a>
 
-        <div id="filter-panel" class="filter-panel">
+        {% for pack in typePacks %}
+            <a href="{{ path('app_produits', {slug: pack.slug}) }}"
+               class="{{ typePack and typePack.id == pack.id ? 'active' }}">
+                {{ pack.nom }}
+            </a>
+        {% endfor %}
 
-            <form method="get">
+    </div>
 
-                <label>Catégorie</label>
-                <select name="categorie" class="filter-select">
-                    <option value="">Toutes</option>
+    <!-- FILTRES PANEL -->
+    <div id="filter-panel" class="filter-panel">
 
-                    {% for categorie in categories %}
-                        <option value="{{ categorie.id }}"
-                                {% if app.request.query.get('categorie') == categorie.id %}selected{% endif %}>
-                            {{ categorie.nom }}
-                        </option>
-                    {% endfor %}
-                </select>
+        <form method="get">
 
-                <label>Trier par</label>
-                <select name="tri" class="filter-select">
-                    <option value="">Par défaut</option>
-                    <option value="prix_asc"
-                            {% if app.request.query.get('tri') == 'prix_asc' %}selected{% endif %}>
-                        Prix croissant
+            <label>Catégorie</label>
+            <select name="categorie" class="filter-select">
+                <option value="">Toutes</option>
+
+                {% for categorie in categories %}
+                    <option value="{{ categorie.id }}"
+                            {% if app.request.query.get('categorie') == categorie.id %}selected{% endif %}>
+                        {{ categorie.nom }}
                     </option>
-                    <option value="prix_desc"
-                            {% if app.request.query.get('tri') == 'prix_desc' %}selected{% endif %}>
-                        Prix décroissant
-                    </option>
-                    <option value="nom"
-                            {% if app.request.query.get('tri') == 'nom' %}selected{% endif %}>
-                        Nom A → Z
-                    </option>
-                </select>
+                {% endfor %}
+            </select>
 
-                <button type="submit" class="btn-validate">
-                    Appliquer
-                </button>
+            <label>Trier par</label>
+            <select name="tri" class="filter-select">
+                <option value="">Par défaut</option>
+                <option value="prix_asc"
+                        {% if app.request.query.get('tri') == 'prix_asc' %}selected{% endif %}>
+                    Prix croissant
+                </option>
+                <option value="prix_desc"
+                        {% if app.request.query.get('tri') == 'prix_desc' %}selected{% endif %}>
+                    Prix décroissant
+                </option>
+                <option value="nom"
+                        {% if app.request.query.get('tri') == 'nom' %}selected{% endif %}>
+                    Nom A → Z
+                </option>
+            </select>
 
-            </form>
+            <button type="submit" class="btn-validate">
+                Appliquer
+            </button>
 
-        </div>
+        </form>
 
     </div>
 
@@ -133,20 +145,17 @@
 
                         <div class="product-price-block">
                             <span class="product-price">
-                                {{ (produit.prix)|number_format(2, ',', ' ') }} €
+                                {{ produit.prix|number_format(2, ',', ' ') }} €
                             </span>
                             <p class="vat-note">Prix TTC — ajustement au paiement</p>
                         </div>
 
                         {% if produit.stock > 0 %}
-
-                            <!-- AJOUT PANIER -->
                             <a href="#"
                                class="cart-icon add-to-cart"
                                data-url="{{ path('panier_add', {id: produit.id}) }}">
                                 🧺
                             </a>
-
                         {% else %}
                             <span class="out-of-stock">Rupture</span>
                         {% endif %}
@@ -159,14 +168,20 @@
 
                 {% if is_granted('ROLE_ADMIN') %}
                     <div class="product-actions">
-                        <a href="{{ path('produit_edit', {id: produit.id}) }}">Modifier</a>
+                        <a href="{{ path('produit_edit', {id: produit.id}) }}"
+                           class="btn btn-outline btn-sm action-btn">
+                            Modifier
+                        </a>
 
                         <form method="post"
-                              action="{{ path('produit_delete', {id: produit.id}) }}">
+                              action="{{ path('produit_delete', {id: produit.id}) }}"
+                              onsubmit="return confirm('Supprimer ce produit ?');">
+
                             <input type="hidden"
                                    name="_token"
                                    value="{{ csrf_token('delete' ~ produit.id) }}">
-                            <button onclick="return confirm('Supprimer ?')">
+
+                            <button class="btn btn-delete btn-sm action-btn">
                                 Supprimer
                             </button>
                         </form>

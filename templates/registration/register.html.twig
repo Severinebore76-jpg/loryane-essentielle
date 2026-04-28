@@ -1,0 +1,57 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Créer un compte{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
+{% endblock %}
+
+{% block body %}
+
+    <section class="admin-container">
+
+        <h1 class="admin-title">Créer un compte</h1>
+        <p class="admin-subtitle">Rejoignez l’univers Loryane</p>
+
+        <div class="admin-card">
+
+            {{ form_start(registrationForm) }}
+
+            <div class="admin-form-group">
+                {{ form_label(registrationForm.email) }}
+                {{ form_widget(registrationForm.email) }}
+            </div>
+
+            <div class="admin-form-group">
+                {{ form_label(registrationForm.nom) }}
+                {{ form_widget(registrationForm.nom) }}
+            </div>
+
+            <div class="admin-form-group">
+                {{ form_label(registrationForm.prenom) }}
+                {{ form_widget(registrationForm.prenom) }}
+            </div>
+
+            <div class="admin-form-group">
+                {{ form_label(registrationForm.plainPassword) }}
+                {{ form_widget(registrationForm.plainPassword) }}
+            </div>
+
+            <div class="form-actions">
+                <button class="btn btn-main">
+                    S’inscrire
+                </button>
+
+                <a href="{{ path('app_login') }}" class="btn btn-outline">
+                    ← Connexion
+                </a>
+            </div>
+
+            {{ form_end(registrationForm) }}
+
+        </div>
+
+    </section>
+
+{% endblock %}

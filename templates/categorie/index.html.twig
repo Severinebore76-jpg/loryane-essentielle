@@ -1,39 +1,71 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Liste des catégories{% endblock %}
+{% block title %}Catégories{% endblock %}
 
 {% block body %}
-    <h1>Liste des catégories</h1>
 
-    <a href="{{ path('categorie_new') }}" style="display:inline-block; margin-bottom:20px;">
-        + Ajouter une catégorie
-    </a>
+    <section class="admin-container">
 
-    {% for categorie in categories %}
-        <div style="border:1px solid #ccc; padding:10px; margin:10px;">
+        <div class="admin-header">
 
-            <h2>{{ categorie.nom }}</h2>
+            <h1 class="admin-title">Catégories</h1>
 
-            <p>{{ categorie.description }}</p>
+            <div class="admin-actions">
+                <a href="{{ path('admin_dashboard') }}" class="btn btn-outline">
+                    ← Retour admin
+                </a>
 
-            <p>
-                Nombre de produits : {{ categorie.produits|length }}
-            </p>
-
-            <a href="{{ path('categorie_edit', {id: categorie.id}) }}">
-                Modifier
-            </a>
-
-            <form method="post" action="{{ path('categorie_delete', {id: categorie.id}) }}" style="display:inline;">
-                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ categorie.id) }}">
-                <button onclick="return confirm('Supprimer cette catégorie ?')">
-                    Supprimer
-                </button>
-            </form>
+                <a href="{{ path('categorie_new') }}" class="btn btn-main">
+                    + Ajouter une catégorie
+                </a>
+            </div>
 
         </div>
-    {% else %}
-        <p>Aucune catégorie trouvée</p>
-    {% endfor %}
+
+        <div class="admin-grid">
+
+            {% for categorie in categories %}
+                <div class="admin-card">
+
+                    <h2>{{ categorie.nom }}</h2>
+
+                    <p class="admin-desc">
+                        {{ categorie.description }}
+                    </p>
+
+                    <p class="admin-meta">
+                        {{ categorie.produits|length }} produit(s)
+                    </p>
+
+                    <div class="admin-actions">
+
+                        <a href="{{ path('categorie_edit', {id: categorie.id}) }}"
+                           class="btn btn-outline btn-sm">
+                            Modifier
+                        </a>
+
+                        <form method="post"
+                              action="{{ path('categorie_delete', {id: categorie.id}) }}"
+                              onsubmit="return confirm('Supprimer cette catégorie ?');">
+
+                            <input type="hidden" name="_token"
+                                   value="{{ csrf_token('delete' ~ categorie.id) }}">
+
+                            <button class="btn btn-delete btn-sm">
+                                Supprimer
+                            </button>
+
+                        </form>
+
+                    </div>
+
+                </div>
+            {% else %}
+                <p>Aucune catégorie</p>
+            {% endfor %}
+
+        </div>
+
+    </section>
 
 {% endblock %}

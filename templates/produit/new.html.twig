@@ -1,13 +1,84 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Créer un produit{% endblock %}
+{% block title %}Ajouter un produit{% endblock %}
 
 {% block body %}
-    <h1>Créer un produit</h1>
 
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button>Enregistrer</button>
-    {{ form_end(form) }}
+    <section class="cart-container">
+
+        <h1 class="cart-title">Ajouter un produit</h1>
+
+        <div class="cart-list">
+
+            <div class="cart-item cart-form">
+
+                {{ form_start(form) }}
+
+                <div class="cart-info">
+                    {{ form_row(form.nom, {
+                        label_attr: { class: 'cart-label' },
+                        attr: { class: 'input-field' }
+                    }) }}
+                </div>
+
+                <div class="cart-info">
+                    {{ form_row(form.description, {
+                        label_attr: { class: 'cart-label' },
+                        attr: { class: 'input-field' }
+                    }) }}
+                </div>
+
+                <div class="cart-info">
+                    {{ form_row(form.prix, {
+                        label_attr: { class: 'cart-label' },
+                        attr: { class: 'input-field' }
+                    }) }}
+                </div>
+
+                <div class="cart-info">
+                    {{ form_row(form.stock, {
+                        label_attr: { class: 'cart-label' },
+                        attr: { class: 'input-field' }
+                    }) }}
+                </div>
+
+                <div class="cart-info">
+                    {{ form_row(form.image, {
+                        label_attr: { class: 'cart-label' },
+                        attr: { class: 'input-field' }
+                    }) }}
+                </div>
+
+                <div class="cart-info">
+                    {{ form_row(form.categorie, {
+                        label_attr: { class: 'cart-label' }
+                    }) }}
+                </div>
+
+                <div class="cart-info">
+                    {{ form_row(form.typePack, {
+                        label_attr: { class: 'cart-label' }
+                    }) }}
+                </div>
+
+                <div class="form-actions">
+
+                    <button type="submit" class="btn-primary">
+                        Créer
+                    </button>
+
+                    <a href="{{ path('admin_dashboard') }}" class="btn-secondary">
+                        ← Retour admin
+                    </a>
+
+                </div>
+
+                {{ form_end(form) }}
+
+            </div>
+
+        </div>
+
+    </section>
 
 {% endblock %}

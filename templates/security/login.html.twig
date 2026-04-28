@@ -4,32 +4,76 @@
 
 {% block body %}
 
-    {% if not app.user %}
+    <section class="admin-container">
 
-        <h1>Connexion</h1>
+        {% if not app.user %}
 
-        {% if error %}
-            <div style="color:red;">
-                Identifiants invalides
+            <h1 class="admin-title">Connexion</h1>
+            <p class="admin-subtitle">Accédez à votre espace</p>
+
+            <div class="admin-card">
+
+                {% if error %}
+                    <div style="color:red; margin-bottom:15px;">
+                        Identifiants invalides
+                    </div>
+                {% endif %}
+
+                <form method="post" action="{{ path('app_login') }}">
+
+                    <input type="hidden" name="_csrf_token"
+                           value="{{ csrf_token('authenticate') }}">
+
+                    <div class="admin-form-group">
+                        <label>Email</label>
+                        <input type="email"
+                               name="_username"
+                               class="input-field"
+                               value="{{ last_username }}"
+                               required>
+                    </div>
+
+                    <div class="admin-form-group">
+                        <label>Mot de passe</label>
+                        <input type="password"
+                               name="_password"
+                               class="input-field"
+                               required>
+                    </div>
+
+                    <div class="form-actions">
+                        <button type="submit" class="btn btn-main">
+                            Se connecter
+                        </button>
+
+                        <a href="{{ path('app_register') }}" class="btn btn-outline">
+                            Créer un compte
+                        </a>
+                    </div>
+
+                </form>
+
             </div>
+
+        {% else %}
+
+            <section class="admin-container">
+                <h1 class="admin-title">Déjà connecté</h1>
+
+                <div class="admin-card">
+                    <p>Vous êtes connecté avec :</p>
+                    <strong>{{ app.user.email }}</strong>
+
+                    <div class="form-actions">
+                        <a href="{{ path('app_logout') }}" class="btn btn-main">
+                            Se déconnecter
+                        </a>
+                    </div>
+                </div>
+            </section>
+
         {% endif %}
 
-        <form method="post" action="{{ path('app_login') }}">
-
-            <input type="hidden" name="_csrf_token"
-                   value="{{ csrf_token('authenticate') }}">
-
-            <input type="email" name="_username" required>
-            <input type="password" name="_password" required>
-
-            <button type="submit">Login</button>
-
-        </form>
-
-    {% else %}
-
-        <p>Vous êtes déjà connecté.</p>
-
-    {% endif %}
+    </section>
 
 {% endblock %}

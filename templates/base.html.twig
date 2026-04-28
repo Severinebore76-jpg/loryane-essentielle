@@ -6,44 +6,52 @@
 
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/accueil.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
     <link rel="stylesheet" href="{{ asset('css/profil.css') }}">
     <link rel="stylesheet" href="{{ asset('css/about.css') }}">
     <link rel="stylesheet" href="{{ asset('css/catalogue.css') }}">
     <link rel="stylesheet" href="{{ asset('css/panier.css') }}">
     <link rel="stylesheet" href="{{ asset('css/produit.css') }}">
-
 </head>
+
 <body>
 
 <header class="header">
     <div class="header-container">
+
+        {# 🔥 MENU DYNAMIQUE #}
+        {% set route = app.request.attributes.get('_route') %}
+        {% set menu = [] %}
+
+        {# COMMUN #}
+        {% set menu = menu|merge([
+            { label: 'Accueil', route: 'app_home', active: route == 'app_home' },
+            { label: 'Catalogue', route: 'app_produits', active: route starts with 'app_produits' }
+        ]) %}
+
+        {# CLIENT UNIQUEMENT #}
+        {% if not is_granted('ROLE_ADMIN') %}
+            {% set menu = menu|merge([
+                { label: 'Mon panier', route: 'app_panier', active: route starts with 'app_panier' },
+                { label: 'Mon compte', route: 'app_profil', active: route starts with 'app_profil' },
+                { label: 'À propos', route: 'app_about', active: route == 'app_about' }
+            ]) %}
+        {% endif %}
+
+        {# ADMIN #}
+        {% if is_granted('ROLE_ADMIN') %}
+            {% set menu = menu|merge([
+                { label: 'Admin', route: 'admin_dashboard', active: route starts with 'admin' }
+            ]) %}
+        {% endif %}
+
         <nav class="nav">
-            {% set route = app.request.attributes.get('_route') %}
-
-            <a href="{{ path('app_home') }}"
-               class="nav-btn {{ route == 'app_home' ? 'active' }}">
-                Accueil
-            </a>
-
-            <a href="{{ path('app_produits') }}"
-               class="nav-btn {{ route starts with 'app_produits' ? 'active' }}">
-                Catalogue
-            </a>
-
-            <a href="{{ path('app_panier') }}"
-               class="nav-btn {{ route starts with 'app_panier' ? 'active' }}">
-                Mon panier
-            </a>
-
-            <a href="{{ path('app_profil') }}"
-               class="nav-btn {{ route starts with 'app_profil' ? 'active' }}">
-                Mon compte
-            </a>
-
-            <a href="{{ path('app_about') }}"
-               class="nav-btn {{ route == 'app_about' ? 'active' }}">
-                À propos
-            </a>
+            {% for item in menu %}
+                <a href="{{ path(item.route) }}"
+                   class="nav-btn {{ item.active ? 'active' }}">
+                    {{ item.label }}
+                </a>
+            {% endfor %}
         </nav>
 
         <div class="header-right">
@@ -51,17 +59,20 @@
                 <input type="text" name="q" placeholder="Rechercher..." class="search-input">
                 <button type="submit" class="search-btn">🔍</button>
             </form>
+
             {% if app.user %}
                 <a href="{{ path('app_logout') }}" class="icon">🔓</a>
             {% else %}
                 <a href="{{ path('app_login') }}" class="icon">🔒</a>
             {% endif %}
+
             <div class="lang-switch">
                 <span class="lang active">Fr</span>
                 <span class="lang">En</span>
                 <span class="lang">Es</span>
             </div>
         </div>
+
     </div>
 </header>
 
@@ -91,14 +102,13 @@
     {% endfor %}
 {% endif %}
 
-<!-- 🔥 WRAPPER GLOBAL -->
 <div class="page-background">
 
     <main>
         {% block body %}{% endblock %}
     </main>
 
-    <!-- ✅ FOOTER AU BON ENDROIT -->
+    {% if not is_granted('ROLE_ADMIN') %}
     <footer class="footer">
         <div class="footer-container">
             <a href="{{ path('app_mentions') }}">Mentions légales</a>
@@ -106,9 +116,8 @@
             <a href="{{ path('app_contact') }}">Contact</a>
         </div>
     </footer>
-
+    {% endif %}
 </div>
 
 </body>
-
 </html>

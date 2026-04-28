@@ -1,0 +1,31 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <section class="admin-container">
+
+        <h1 class="admin-title">Back-office</h1>
+        <p class="admin-subtitle">Gestion de votre boutique</p>
+
+        <div class="admin-grid">
+
+            <a href="{{ path('app_produits') }}" class="admin-card">
+                <h2>Produits</h2>
+                <p>Gérer les produits (CRUD)</p>
+            </a>
+
+            <a href="{{ path('admin_commandes') }}" class="admin-card">
+                <h2>Commandes</h2>
+                <p>Suivre et gérer les commandes</p>
+            </a>
+
+            <a href="{{ path('categorie_index') }}" class="admin-card">
+                <h2>Catégories</h2>
+                <p>Gérer les catégories</p>
+            </a>
+
+        </div>
+
+    </section>
+
+{% endblock %}

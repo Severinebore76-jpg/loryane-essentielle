@@ -2,11 +2,48 @@
 
 {% block title %}Créer une catégorie{% endblock %}
 
-{% block body %}
-    <h1>Créer une catégorie</h1>
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
+{% endblock %}
 
-    {{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button>Enregistrer</button>
-    {{ form_end(form) }}
+{% block body %}
+
+    <section class="admin-container">
+
+        <h1 class="admin-title">Créer une catégorie</h1>
+        <p class="admin-subtitle">Ajouter une nouvelle catégorie</p>
+
+        <div class="admin-card">
+
+            {{ form_start(form) }}
+
+            <div class="admin-form-group">
+                {{ form_label(form.nom) }}
+                {{ form_widget(form.nom, { attr: { class: 'input-field' } }) }}
+            </div>
+
+            <div class="admin-form-group">
+                {{ form_label(form.description) }}
+                {{ form_widget(form.description, { attr: { class: 'input-field' } }) }}
+            </div>
+
+            <div class="form-actions">
+
+                <button type="submit" class="btn btn-main">
+                    Créer
+                </button>
+
+                <a href="{{ path('categorie_index') }}" class="btn btn-outline">
+                    ← Retour
+                </a>
+
+            </div>
+
+            {{ form_end(form) }}
+
+        </div>
+
+    </section>
+
 {% endblock %}

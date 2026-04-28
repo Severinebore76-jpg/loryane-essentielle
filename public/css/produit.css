@@ -3,7 +3,7 @@
 ===================================================== */
 .product-detail {
     display: flex;
-    gap: 60px;
+    gap: 50px;
     padding: 60px;
     align-items: flex-start;
     color: #8f4930;
