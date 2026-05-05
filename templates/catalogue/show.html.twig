@@ -9,11 +9,12 @@
         <!-- IMAGE -->
         <div class="product-detail-image">
             <img
+                class="product-image"
                 src="{{ produit.image
                 ? asset('uploads/' ~ produit.image)
                 : asset('images/default.jpg') }}"
                 alt="{{ produit.nom }}"
-                onerror="this.src='{{ asset('images/default.jpg') }}'"
+                data-fallback='{{ asset('images/default.jpg') }}"
             >
         </div>
         <div class="add-popup">Ajouté au panier ✔</div>

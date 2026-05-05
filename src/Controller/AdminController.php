@@ -32,7 +32,7 @@ final class AdminController extends AbstractController
             ->getQuery()
             ->getResult();
 
-        return $this->render('admin/commandes.html.twig', [
+        return $this->render('admin/commande/commandes.html.twig', [
             'commandes' => $commandes,
         ]);
     }
@@ -49,7 +49,7 @@ final class AdminController extends AbstractController
             throw $this->createNotFoundException('Commande introuvable');
         }
 
-        return $this->render('admin/commande_detail.html.twig', [
+        return $this->render('admin/commande/commande_detail.html.twig', [
             'commande' => $commande,
         ]);
     }
@@ -70,6 +70,9 @@ final class AdminController extends AbstractController
         $statut = $request->request->get('statut');
         $commande->setStatut($statut);
         $em->flush();
-        return $this->redirectToRoute('admin_commande_detail', ['id' => $id]);
+        return $this->redirectToRoute(
+            'admin_commande_detail',
+            ['id' => $id]
+        );
     }
-    }
+}

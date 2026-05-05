@@ -6,6 +6,7 @@ use App\Repository\CommandeRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use DateTimeImmutable;
 
 #[ORM\Entity(repositoryClass: CommandeRepository::class)]
 class Commande
@@ -16,7 +17,7 @@ class Commande
     private ?int $id = null;
 
     #[ORM\Column]
-    private ?\DateTimeImmutable $date = null;
+    private ?DateTimeImmutable $date = null;
 
     #[ORM\Column(length: 255)]
     private string $statut;
@@ -51,12 +52,12 @@ class Commande
         return $this->id;
     }
 
-    public function getDate(): ?\DateTimeImmutable
+    public function getDate(): ?DateTimeImmutable
     {
         return $this->date;
     }
 
-    public function setDate(\DateTimeImmutable $date): static
+    public function setDate(DateTimeImmutable $date): static
     {
         $this->date = $date;
 

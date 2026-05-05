@@ -66,7 +66,7 @@ class LigneCommande
         return $this->produit;
     }
 
-    public function setProduit(Produit $produit): static
+    public function setProduit(?Produit $produit): static
     {
         $this->produit = $produit;
 
@@ -78,7 +78,7 @@ class LigneCommande
         return $this->commande;
     }
 
-    public function setCommande(Commande $commande): static
+    public function setCommande(?Commande $commande): static
     {
         $this->commande = $commande;
 

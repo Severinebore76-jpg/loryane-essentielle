@@ -15,7 +15,7 @@
         {% endif %}
     </section>
 
-    <!-- 🔥 TOOLBAR PROPRE -->
+    <!-- TOOLBAR -->
     <div class="catalog-toolbar">
 
         <div class="toolbar-left">
@@ -23,18 +23,18 @@
         </div>
 
         <div class="toolbar-center">
-            <button id="filter-toggle" class="filter-btn">
+            <button id="filter-toggle" class="btn btn-secondary">
                 Filtres
             </button>
         </div>
 
         <div class="toolbar-right">
             {% if is_granted('ROLE_ADMIN') %}
-                <a href="{{ path('admin_dashboard') }}" class="btn btn-outline btn-sm">
+                <a href="{{ path('admin_dashboard') }}" class="btn btn-secondary btn-sm">
                     ← Retour admin
                 </a>
-                <a href="{{ path('produit_new') }}" class="admin-card">
-                    <h2>Ajouter un produit</h2>
+                <a href="{{ path('produit_new') }}" class="btn btn-primary">
+                    Ajouter un produit
                 </a>
             {% endif %}
         </div>
@@ -63,10 +63,9 @@
 
         <form method="get">
 
-            <label>Catégorie</label>
-            <select name="categorie" class="filter-select">
+            <label for="categorie">Catégorie</label>
+            <select id="categorie" name="categorie" class="filter-select">
                 <option value="">Toutes</option>
-
                 {% for categorie in categories %}
                     <option value="{{ categorie.id }}"
                             {% if app.request.query.get('categorie') == categorie.id %}selected{% endif %}>
@@ -75,8 +74,8 @@
                 {% endfor %}
             </select>
 
-            <label>Trier par</label>
-            <select name="tri" class="filter-select">
+            <label for="tri">Trier par</label>
+            <select id="tri" name="tri" class="filter-select">
                 <option value="">Par défaut</option>
                 <option value="prix_asc"
                         {% if app.request.query.get('tri') == 'prix_asc' %}selected{% endif %}>
@@ -92,7 +91,7 @@
                 </option>
             </select>
 
-            <button type="submit" class="btn-validate">
+            <button type="submit" class="btn btn-primary">
                 Appliquer
             </button>
 
@@ -106,19 +105,15 @@
         {% for produit in produits %}
             <div class="product-card">
 
-                {% set quantite = panierSession[produit.id] ?? 0 %}
-
                 <a href="{{ path('produit_show', {
                     id: produit.id,
                     categorie: app.request.query.get('categorie')
                 }) }}">
-                    <img
-                        src="{{ produit.image
-                        ? asset('uploads/' ~ produit.image)
-                        : asset('images/default.jpg') }}"
-                        alt="{{ produit.nom }}"
-                        onerror="this.src='{{ asset('images/default.jpg') }}'"
-                    >
+                    <img class="img-fallback"
+                         src="{{ produit.image
+                         ? asset('uploads/' ~ produit.image)
+                         : asset('images/default.jpg') }}"
+                         alt="{{ produit.nom }}">
                 </a>
 
                 <div class="product-content">
@@ -144,9 +139,9 @@
                     <div class="product-bottom">
 
                         <div class="product-price-block">
-                            <span class="product-price">
-                                {{ produit.prix|number_format(2, ',', ' ') }} €
-                            </span>
+                        <span class="product-price">
+                            {{ produit.prix|number_format(2, ',', ' ') }} €
+                        </span>
                             <p class="vat-note">Prix TTC — ajustement au paiement</p>
                         </div>
 
@@ -167,73 +162,37 @@
                 <div class="add-popup">Ajouté au panier ✔</div>
 
                 {% if is_granted('ROLE_ADMIN') %}
+
                     <div class="product-actions">
+
                         <a href="{{ path('produit_edit', {id: produit.id}) }}"
-                           class="btn btn-outline btn-sm action-btn">
+                           class="btn btn-primary btn-sm">
                             Modifier
                         </a>
 
                         <form method="post"
                               action="{{ path('produit_delete', {id: produit.id}) }}"
-                              onsubmit="return confirm('Supprimer ce produit ?');">
+                              onsubmit="return confirm('Supprimer ce produit ?');"
+                              class="inline-form">
 
                             <input type="hidden"
                                    name="_token"
                                    value="{{ csrf_token('delete' ~ produit.id) }}">
 
-                            <button class="btn btn-delete btn-sm action-btn">
+                            <button type="submit"
+                                    class="btn btn-danger btn-sm">
                                 Supprimer
                             </button>
+
                         </form>
+
                     </div>
+
                 {% endif %}
 
             </div>
         {% endfor %}
 
     </div>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
-
-            const btn = document.getElementById("menu-toggle");
-            const panel = document.getElementById("menu-panel");
-
-            if (btn) {
-                btn.addEventListener("click", function () {
-                    panel.style.display = panel.style.display === "block" ? "none" : "block";
-                });
-            }
-
-            const filterBtn = document.getElementById("filter-toggle");
-            const filterPanel = document.getElementById("filter-panel");
-
-            if (filterBtn) {
-                filterBtn.addEventListener("click", function () {
-                    filterPanel.style.display =
-                        filterPanel.style.display === "block" ? "none" : "block";
-                });
-            }
-
-            document.querySelectorAll(".add-to-cart").forEach(button => {
-                button.addEventListener("click", function (e) {
-                    e.preventDefault();
-
-                    const url = this.dataset.url;
-                    const card = this.closest(".product-card");
-                    const popup = card.querySelector(".add-popup");
-
-                    fetch(url)
-                        .then(() => {
-                            popup.classList.add("show");
-                            setTimeout(() => {
-                                popup.classList.remove("show");
-                            }, 2000);
-                        });
-                });
-            });
-
-        });
-    </script>
 
 {% endblock %}

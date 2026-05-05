@@ -8,7 +8,11 @@
 {% block body %}
 
     <section class="hero">
-        <img src="{{ asset('images/icone_loryane.png') }}" class="logo">
+        <img
+            src="{{ asset('images/icone_loryane.png') }}"
+            class="logo"
+            alt="Logo Loryane Essentielle"
+            >
 
         <h1>Loryane <span>Essentielle®</span></h1>
 
@@ -26,10 +30,14 @@
     </section>
 
     <section class="gallery">
-        <img src="{{ asset('images/meditation-02-fevrier.jpg') }}">
-        <img src="{{ asset('images/meditation-03-mars.jpg') }}">
-        <img src="{{ asset('images/meditation-04-avril.jpg') }}">
-        <img src="{{ asset('images/meditation-06-juin.jpg') }}">
+        <img src="{{ asset('images/meditation-02-fevrier.jpg') }}"
+             alt="Méditation février">
+        <img src="{{ asset('images/meditation-03-mars.jpg') }}"
+             alt="Méditation mars">
+        <img src="{{ asset('images/meditation-04-avril.jpg') }}"
+             alt="Méditation avril">
+        <img src="{{ asset('images/meditation-06-juin.jpg') }}"
+             alt="Méditation juin">
     </section>
 
 {% endblock %}

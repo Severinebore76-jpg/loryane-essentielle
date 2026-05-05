@@ -6,7 +6,9 @@ use App\Entity\Commande;
 use App\Entity\LigneCommande;
 use App\Repository\ProduitRepository;
 use App\Repository\AdresseRepository;
+use App\Entity\Utilisateur;
 use App\Service\PanierService;
+use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -22,7 +24,11 @@ class CommandeController extends AbstractController
     ): Response {
         $panier = $panierService->getPanierComplet($produitRepository);
         $total = $panierService->getTotal($produitRepository);
-        $adresses = $this->getUser()->getAdresses();
+        $user = $this->getUser();
+        if (!$user instanceof Utilisateur) {
+            throw $this->createAccessDeniedException();
+        }
+        $adresses = $user->getAdresses();
 
         if (empty($panier)) {
             $this->addFlash('error', 'Panier vide');
@@ -92,15 +98,17 @@ class CommandeController extends AbstractController
         // COMMANDE
         // =========================
         $commande = new Commande();
-
-        $commande->setUtilisateur($this->getUser());
+        $user = $this->getUser();
+        if (!$user instanceof Utilisateur) {
+            throw $this->createAccessDeniedException();
+        }
+        $commande->setUtilisateur($user);
         $commande->setAdresse($adresse);
-        $commande->setDate(new \DateTimeImmutable());
+        $commande->setDate(new DateTimeImmutable());
         $commande->setStatut('pending');
         $commande->setTotal(
             $panierService->getTotal($produitRepository)
         );
-
         $em->persist($commande);
 
         // =========================

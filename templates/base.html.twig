@@ -4,14 +4,17 @@
     <meta charset="UTF-8">
     <title>{% block title %}Loryane{% endblock %}</title>
 
+    {% block importmap %} {{ importmap('app') }} {% endblock %}
+
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/accueil.css') }}">
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
     <link rel="stylesheet" href="{{ asset('css/profil.css') }}">
     <link rel="stylesheet" href="{{ asset('css/about.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/catalogue.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/panier.css') }}">
     <link rel="stylesheet" href="{{ asset('css/produit.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/panier.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/catalogue.css') }}">
+    <link rel="stylesheet" href="{{ asset('css/variable.css') }}">
 </head>
 
 <body>
@@ -56,7 +59,14 @@
 
         <div class="header-right">
             <form action="{{ path('app_produits') }}" method="get" class="search-form">
-                <input type="text" name="q" placeholder="Rechercher..." class="search-input">
+                <label for="search-input" class="sr-only">
+                    Rechercher
+                </label>
+                <input id="search-input"
+                       type="text"
+                       name="q"
+                       placeholder="Rechercher..."
+                       class="search-input">
                 <button type="submit" class="search-btn">🔍</button>
             </form>
 

@@ -59,9 +59,10 @@
                     <!-- IMAGE -->
                     <div class="cart-image">
                         <img
+                            class="product-image"
                             src="{{ asset(ligne.produit.image ? 'uploads/' ~ ligne.produit.image : 'images/default.jpg') }}"
                             alt="{{ ligne.produit.nom }}"
-                            onerror="this.onerror=null;this.src='{{ asset('images/default.jpg') }}';">
+                            data-fallback='{{ asset('images/default.jpg') }}">
                     </div>
 
                     <!-- INFOS -->

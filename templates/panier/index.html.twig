@@ -18,12 +18,12 @@
                         <!-- IMAGE -->
                         <div class="cart-image">
                             <img
+                                class="product-image"
                                 src="{{ item.produit.image
                                 ? asset('uploads/' ~ item.produit.image)
                                 : asset('images/default.jpg') }}"
                                 alt="{{ item.produit.nom }}"
-                                onerror="this.src='{{ asset('images/default.jpg') }}'"
-                            >
+                                data-fallback="{{ asset('images/default.jpg') }}"                            >
                         </div>
 
                         <!-- INFOS -->
@@ -83,7 +83,7 @@
             </div>
 
         {% else %}
-            <p class="cart-empty">Votre panier est vide</p>
+            <p class="cart-empty">Votre panier est vide.</p>
         {% endif %}
 
     </section>

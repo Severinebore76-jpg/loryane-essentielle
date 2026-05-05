@@ -82,7 +82,7 @@ final class ProduitController extends AbstractController
 
         $produits = $qb->getQuery()->getResult();
 
-        return $this->render('produit/index.html.twig', [
+        return $this->render('catalogue/index.html.twig', [
             'produits' => $produits,
             'categories' => $categorieRepository->findAll(),
             'typePack' => $typePack,
@@ -113,7 +113,7 @@ final class ProduitController extends AbstractController
                         $this->getParameter('uploads_directory'),
                         $newFilename
                     );
-                } catch (FileException $e) {}
+                } catch (FileException $em) {}
 
                 $produit->setImage($newFilename);
             }
@@ -124,7 +124,7 @@ final class ProduitController extends AbstractController
             return $this->redirectToRoute('app_produits');
         }
 
-        return $this->render('produit/new.html.twig', [
+        return $this->render('admin/produit/new.html.twig', [
             'form' => $form->createView(),
         ]);
     }
@@ -142,29 +142,12 @@ final class ProduitController extends AbstractController
                 return $this->redirectToRoute('app_produits');
             }
 
-            $imageFile = $form->get('image')->getData();
-
-            if ($imageFile) {
-                $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
-                $safeFilename = $slugger->slug($originalFilename);
-                $newFilename = $safeFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
-
-                try {
-                    $imageFile->move(
-                        $this->getParameter('uploads_directory'),
-                        $newFilename
-                    );
-                } catch (FileException $e) {}
-
-                $produit->setImage($newFilename);
-            }
-
             $em->flush();
 
             return $this->redirectToRoute('app_produits');
         }
 
-        return $this->render('produit/edit.html.twig', [
+        return $this->render('admin/produit/edit.html.twig', [
             'form' => $form->createView(),
             'produit' => $produit,
         ]);
@@ -190,7 +173,7 @@ final class ProduitController extends AbstractController
     #[Route('/produit/{id}', name: 'produit_show', methods: ['GET'])]
     public function show(Produit $produit, Request $request): Response
     {
-        return $this->render('produit/show.html.twig', [
+        return $this->render('catalogue/show.html.twig', [
             'produit' => $produit,
             'categorie' => $request->query->get('categorie'),
         ]);

@@ -31,8 +31,8 @@ class TypePack
     #[ORM\OneToMany(targetEntity: Produit::class, mappedBy: 'typePack')]
     private Collection $produits;
 
-    // ✅ AJOUT
-    #[ORM\OneToMany(mappedBy: 'typePack', targetEntity: Categorie::class)]
+    // AJOUT
+    #[ORM\OneToMany(targetEntity: Categorie::class, mappedBy: 'typePack')]
     private Collection $categories;
 
     public function __construct()

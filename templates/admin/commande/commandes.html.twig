@@ -32,20 +32,24 @@
             <form method="get">
 
                 <div class="admin-form-group">
-                    <label>ID</label>
-                    <input type="number" name="id"
+                    <label for="filter-id">ID</label>
+                    <input id="filter-id"
+                           type="number"
+                           name="id"
                            value="{{ app.request.query.get('id') }}">
                 </div>
 
                 <div class="admin-form-group">
-                    <label>Client</label>
-                    <input type="text" name="client"
+                    <label for="filter-client">Client</label>
+                    <input id="filter-client"
+                           type="text"
+                           name="client"
                            value="{{ app.request.query.get('client') }}">
                 </div>
 
                 <div class="admin-form-group">
-                    <label>Statut</label>
-                    <select name="statut">
+                    <label for="filter-statut">Statut</label>
+                    <select id="filter-statut" name="statut">
                         <option value="">Tous</option>
                         <option value="pending"
                                 {% if app.request.query.get('statut') == 'pending' %}selected{% endif %}>
@@ -59,20 +63,28 @@
                 </div>
 
                 <div class="admin-form-group">
-                    <label>Date</label>
-                    <input type="date" name="date"
+                    <label for="filter-date">Date</label>
+                    <input id="filter-date"
+                           type="date"
+                           name="date"
                            value="{{ app.request.query.get('date') }}">
                 </div>
 
                 <div class="admin-form-group">
-                    <label>Montant min</label>
-                    <input type="number" step="0.01" name="min"
+                    <label for="filter-min">Montant min</label>
+                    <input id="filter-min"
+                           type="number"
+                           step="0.01"
+                           name="min"
                            value="{{ app.request.query.get('min') }}">
                 </div>
 
                 <div class="admin-form-group">
-                    <label>Montant max</label>
-                    <input type="number" step="0.01" name="max"
+                    <label for="filter-max">Montant max</label>
+                    <input id="filter-max"
+                           type="number"
+                           step="0.01"
+                           name="max"
                            value="{{ app.request.query.get('max') }}">
                 </div>
 
@@ -142,36 +154,5 @@
         </div>
 
     </section>
-
-    <!-- JS TOGGLE FILTRES -->
-    <script>
-
-        document.addEventListener("DOMContentLoaded", function () {
-
-            const btn = document.getElementById("filter-toggle");
-
-            const panel = document.getElementById("filter-panel");
-
-            if (btn && panel) {
-
-                btn.addEventListener("click", function () {
-
-                    if (panel.style.display === "block") {
-
-                        panel.style.display = "none";
-
-                    } else {
-
-                        panel.style.display = "block";
-
-                    }
-
-                });
-
-            }
-
-        });
-
-    </script>
 
 {% endblock %}

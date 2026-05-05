@@ -37,7 +37,10 @@
     </table>
 
     <form method="post" action="{{ path('admin_commande_update_statut', {id: commande.id}) }}">
-        <select name="statut">
+
+        <label for="statut">Statut de la commande</label>
+
+        <select id="statut" name="statut">
             {% for key, label in statuts %}
                 <option value="{{ key }}" {% if commande.statut == key %}selected{% endif %}>
                     {{ label }}
@@ -45,7 +48,6 @@
             {% endfor %}
         </select>
 
-        <button type="submit">Mettre à jour le statut</button>
     </form>
 
 {% endblock %}
