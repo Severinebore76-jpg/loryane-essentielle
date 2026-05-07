@@ -4,6 +4,7 @@ namespace App\Form;
 
 use App\Entity\Categorie;
 use App\Entity\Produit;
+use App\Entity\TypePack;
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -35,6 +36,11 @@ class ProduitType extends AbstractType
             ->add('categorie', EntityType::class, [
                 'class' => Categorie::class,
                 'choice_label' => 'nom',
+            ])
+            ->add('typePack', EntityType::class, [
+                'class' => TypePack::class,
+                'choice_label' => 'nom',
+                'required' => false,
             ])
         ;
     }

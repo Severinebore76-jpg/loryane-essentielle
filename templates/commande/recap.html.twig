@@ -17,12 +17,11 @@
                     <!-- IMAGE -->
                     <div class="cart-image">
                         <img
-                            class="product-image"
                             src="{{ item.produit.image
                             ? asset('uploads/' ~ item.produit.image)
-                            : asset('images/default.jpg') }}"
+                            : asset('images/produit1.jpg') }}"
                             alt="{{ item.produit.nom }}"
-                            data-fallback ='{{ asset('images/default.jpg') }}"
+                            data-fallback ='{{ asset('images/produit1.jpg') }}'
                         >
                     </div>
 
@@ -35,7 +34,7 @@
                     </div>
 
                     <!-- QTE -->
-                    <div class="cart-qty">
+                    <div class="order-quantity">
                         x {{ item.quantite }}
                     </div>
 

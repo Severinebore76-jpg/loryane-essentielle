@@ -6,30 +6,57 @@
 
     <section class="profile-container">
 
-        <h1>Modifier mon profil</h1>
+        <!-- TITRE -->
+        <h1 class="profile-title">
+            Modifier mon profil
+        </h1>
 
+        <!-- FORMULAIRE -->
         <div class="profile-form">
 
             {{ form_start(form) }}
 
             <div class="form-group">
-                <label>Nom</label>
-                {{ form_widget(form.nom, { attr: { class: 'input-field' } }) }}
+
+                <label for="{{ form.nom.vars.id }}">
+                    Nom
+                </label>
+
+                {{ form_widget(form.nom, {
+                    attr: {
+                        class: 'input-field'
+                    }
+                }) }}
+
             </div>
 
             <div class="form-group">
-                <label>Prénom</label>
-                {{ form_widget(form.prenom, { attr: { class: 'input-field' } }) }}
+
+                <label for="{{ form.prenom.vars.id }}">
+                    Prénom
+                </label>
+
+                {{ form_widget(form.prenom, {
+                    attr: {
+                        class: 'input-field'
+                    }
+                }) }}
+
             </div>
 
-            <div class="actions">
-                <button type="submit" class="btn-validate">
+            <!-- ACTIONS -->
+            <div class="profile-actions">
+
+                <button type="submit"
+                        class="btn-profile">
                     Enregistrer
                 </button>
 
-                <a href="{{ path('app_profil') }}" class="btn-validate">
+                <a href="{{ path('app_profil') }}"
+                   class="btn-account">
                     ← Retour
                 </a>
+
             </div>
 
             {{ form_end(form) }}

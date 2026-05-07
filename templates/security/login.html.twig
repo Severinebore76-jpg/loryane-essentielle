@@ -14,7 +14,7 @@
             <div class="admin-card">
 
                 {% if error %}
-                    <div style="color:red; margin-bottom:15px;">
+                    <div class="flash flash-error">
                         Identifiants invalides
                     </div>
                 {% endif %}
@@ -48,7 +48,7 @@
                             Se connecter
                         </button>
 
-                        <a href="{{ path('app_register') }}" class="btn btn-outline">
+                        <a href="{{ path('app_register') }}" class="btn btn-main">
                             Créer un compte
                         </a>
                     </div>

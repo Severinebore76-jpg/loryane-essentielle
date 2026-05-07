@@ -1,0 +1,69 @@
+:root {
+
+    /* COLORS */
+    --color-primary: #8f4930;
+    --color-primary-light: #b76e4d;
+    --color-primary-dark: #6d3522;
+
+    --color-bg: #fdf8f4;
+    --color-bg-soft: #f7efe8;
+    --color-bg-card: #ffffff;
+
+    --color-text: #3d2a22;
+    --color-text-light: #7a6a63;
+
+    --color-border: #e7d8ce;
+
+    --color-success: #4f7c5a;
+    --color-danger: #a94442;
+    --color-warning: #c98b2e;
+
+    --color-white: #ffffff;
+    --color-black: #000000;
+
+    /* TYPOGRAPHY */
+    --font-main: "Segoe UI", sans-serif;
+
+    --text-xs: 12px;
+    --text-sm: 14px;
+    --text-base: 16px;
+    --text-lg: 18px;
+    --text-xl: 24px;
+    --text-xxl: 32px;
+
+    --font-light: 300;
+    --font-normal: 400;
+    --font-medium: 500;
+    --font-bold: 700;
+
+    --line-height: 1.6;
+    /* SPACING */
+    --space-xs: 4px;
+    --space-sm: 8px;
+    --space-md: 16px;
+    --space-lg: 24px;
+    --space-xl: 40px;
+    --space-xxl: 64px;
+
+    /* BORDER RADIUS */
+    --radius-sm: 6px;
+    --radius-md: 12px;
+    --radius-lg: 20px;
+    --radius-xl: 30px;
+    --radius-round: 999px;
+
+    /* SHADOWS */
+    --shadow-sm: 0 2px 8px rgba(0,0,0,0.08);
+    --shadow-md: 0 4px 16px rgba(0,0,0,0.12);
+    --shadow-lg: 0 10px 30px rgba(0,0,0,0.16);
+
+    /* TRANSITIONS */
+    --transition-fast: 0.2s ease;
+    --transition-base: 0.3s ease;
+    --transition-slow: 0.5s ease;
+
+    /* LAYOUT */
+    --container-width: 1200px;
+    --header-height: 80px;
+
+}

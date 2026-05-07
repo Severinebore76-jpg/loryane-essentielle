@@ -1,120 +1,121 @@
 /* =====================================================
-   ABOUT CONTENT
+   ABOUT
 ===================================================== */
-
+/* CONTAINER */
 .about-container {
     max-width: 900px;
     margin: 60px auto;
     padding: 0 20px;
 }
-
-.about-card {
-    background: #ffffff;
-    padding: 40px;
-    border-radius: 20px;
-    line-height: 1.8;
-    color: #5a3a30;
-
-    box-shadow: 0 15px 40px rgba(0,0,0,0.08);
-    position: relative;
-}
-
-.about-card::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 6px;
-    width: 100%;
-    background: #8f4930;
-    border-radius: 20px 20px 0 0;
-}
+/* HERO */
 .about-hero {
-    text-align: center;
     padding: 10px 20px 40px;
+    text-align: center;
     background: radial-gradient(circle at top, #f1ddd7 20%, #f8f5f3 50%);
 }
-
 .about-logo {
     width: 240px;
     margin-bottom: 10px;
 }
-
-.about-hero h1 {
-    font-size: clamp(26px, 5vw, 42px);
-    color: #8f4930;
+.about-title {
     margin-bottom: 10px;
+    font-size: clamp(26px, 5vw, 42px);
     letter-spacing: 1px;
+    color: #8f4930;
 }
-
-.about-hero h1 span {
+.about-title span {
+    position: relative;
+    margin-left: -4px;
     font-size: clamp(16px, 3vw, 20px);
     font-style: italic;
     font-weight: 400;
-    margin-left: -4px;
-    position: relative;
 }
-
 .about-tagline {
     margin: 14px 0;
     font-size: clamp(16px, 3vw, 20px);
     color: #8f4930;
 }
-
-.link-pill {
-    padding: 10px 18px;
-    border-radius: 25px;
-    border: 1px solid #8f4930;
-    color: #8f4930;
-    text-decoration: none;
-    font-size: 14px;
-    transition: all 0.2s ease;
+/* CARD */
+.about-card {
+    position: relative;
+    padding: 40px;
+    border-radius: 20px;
+    background: #ffffff;
+    color: #5a3a30;
+    line-height: 1.8;
+    box-shadow: 0 15px 40px rgba(0, 0, 0, 0.08);
 }
-
-.link-pill:hover {
+.about-card::before {
+    content: "";
+    position: absolute;
+    inset: 0 0 auto 0;
+    height: 6px;
+    border-radius: 20px 20px 0 0;
     background: #8f4930;
-    color: white;
 }
-/* =====================================================
-   LINKS PREMIUM
-===================================================== */
+
+/* LINKS */
 .about-links {
-    margin-top: 40px;
     display: flex;
-    gap: 15px;
     justify-content: center;
     flex-wrap: wrap;
+    gap: 15px;
+    margin-top: 40px;
 }
-
+.about-link {
+    padding: 10px 18px;
+    border: 1px solid #8f4930;
+    border-radius: 25px;
+    color: #8f4930;
+    font-size: 14px;
+    text-decoration: none;
+    transition: all 0.2s ease;
+}
+.about-link:hover {
+    background: #8f4930;
+    color: #ffffff;
+}
 /* =====================================================
    RESPONSIVE
 ===================================================== */
 @media (max-width: 768px) {
-
     .about-hero {
-        padding: 30px 15px;
+        padding: 25px 15px;
     }
     .about-logo {
-        width: 140px;
+        width: 70px;
     }
-    .about-hero h1 {
-        font-size: 26px;
+    .about-title {
+        margin-top: 10px;
+        font-size: 28px;
+        line-height: 1.2;
     }
-    .about-hero h1 span {
-        font-size: 26px;
+    .about-title span {
+        font-size: 18px;
+    }
+    .about-tagline {
+        margin-top: 16px;
+        padding: 0 10px;
+        font-size: 16px;
+        line-height: 1.5;
     }
     .about-container {
-        margin: 30px auto;
+        margin: 25px auto;
+        padding: 0 14px;
     }
     .about-card {
-        padding: 20px;
-        font-size: 14px;
+        padding: 22px;
+        line-height: 1.7;
+    }
+    .about-card p {
+        margin-bottom: 22px;
+        font-size: 15px;
     }
     .about-links {
         gap: 10px;
     }
-    .link-pill {
-        font-size: 13px;
+    .about-link {
         padding: 8px 14px;
+        font-size: 13px;
     }
 }

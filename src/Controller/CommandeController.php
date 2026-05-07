@@ -4,9 +4,9 @@ namespace App\Controller;
 
 use App\Entity\Commande;
 use App\Entity\LigneCommande;
-use App\Repository\ProduitRepository;
-use App\Repository\AdresseRepository;
 use App\Entity\Utilisateur;
+use App\Repository\AdresseRepository;
+use App\Repository\ProduitRepository;
 use App\Service\PanierService;
 use DateTimeImmutable;
 use Doctrine\ORM\EntityManagerInterface;
@@ -22,16 +22,20 @@ class CommandeController extends AbstractController
         PanierService $panierService,
         ProduitRepository $produitRepository
     ): Response {
-        $panier = $panierService->getPanierComplet($produitRepository);
-        $total = $panierService->getTotal($produitRepository);
+
         $user = $this->getUser();
+
         if (!$user instanceof Utilisateur) {
             throw $this->createAccessDeniedException();
         }
+
+        $panier = $panierService->getPanierComplet($produitRepository);
+        $total = $panierService->getTotal($produitRepository);
         $adresses = $user->getAdresses();
 
         if (empty($panier)) {
             $this->addFlash('error', 'Panier vide');
+
             return $this->redirectToRoute('app_panier');
         }
 
@@ -51,11 +55,17 @@ class CommandeController extends AbstractController
         EntityManagerInterface $em
     ): Response {
 
-        // IMPORTANT : on utilise getPanierComplet
+        $user = $this->getUser();
+
+        if (!$user instanceof Utilisateur) {
+            throw $this->createAccessDeniedException();
+        }
+
         $panier = $panierService->getPanierComplet($produitRepository);
 
         if (empty($panier)) {
             $this->addFlash('error', 'Panier vide');
+
             return $this->redirectToRoute('app_panier');
         }
 
@@ -69,16 +79,22 @@ class CommandeController extends AbstractController
 
             if ($quantite <= 0) {
                 $this->addFlash('error', 'Quantité invalide');
+
                 return $this->redirectToRoute('app_panier');
             }
 
             if (!$produit) {
                 $this->addFlash('error', 'Produit introuvable');
+
                 return $this->redirectToRoute('app_panier');
             }
 
             if ($produit->getStock() < $quantite) {
-                $this->addFlash('error', 'Stock insuffisant pour ' . $produit->getNom());
+                $this->addFlash(
+                    'error',
+                    'Stock insuffisant pour ' . $produit->getNom()
+                );
+
                 return $this->redirectToRoute('commande_recap');
             }
         }
@@ -91,6 +107,7 @@ class CommandeController extends AbstractController
 
         if (!$adresse) {
             $this->addFlash('error', 'Adresse invalide');
+
             return $this->redirectToRoute('commande_recap');
         }
 
@@ -98,10 +115,7 @@ class CommandeController extends AbstractController
         // COMMANDE
         // =========================
         $commande = new Commande();
-        $user = $this->getUser();
-        if (!$user instanceof Utilisateur) {
-            throw $this->createAccessDeniedException();
-        }
+
         $commande->setUtilisateur($user);
         $commande->setAdresse($adresse);
         $commande->setDate(new DateTimeImmutable());
@@ -109,6 +123,7 @@ class CommandeController extends AbstractController
         $commande->setTotal(
             $panierService->getTotal($produitRepository)
         );
+
         $em->persist($commande);
 
         // =========================
@@ -117,7 +132,7 @@ class CommandeController extends AbstractController
         foreach ($panier as $item) {
 
             $produit = $item['produit'];
-            $quantite = $item['quantite']; //
+            $quantite = $item['quantite'];
 
             $ligne = new LigneCommande();
 
@@ -128,6 +143,7 @@ class CommandeController extends AbstractController
 
             $em->persist($ligne);
         }
+
         // =========================
         // FINALISATION
         // =========================
@@ -135,12 +151,16 @@ class CommandeController extends AbstractController
 
         $panierService->clear();
 
-        $this->addFlash('order_success', 'Commande validée avec succès');
+        $this->addFlash(
+            'order_success',
+            'Commande validée avec succès'
+        );
 
         return $this->redirectToRoute('commande_detail', [
-            'id' => $commande->getId()
+            'id' => $commande->getId(),
         ]);
     }
+
     #[Route('/mes-commandes', name: 'commande_list')]
     public function list(EntityManagerInterface $em): Response
     {
@@ -155,7 +175,11 @@ class CommandeController extends AbstractController
         ]);
     }
 
-    #[Route('/commande/{id}', name: 'commande_detail')]
+    #[Route(
+        '/commande/{id}',
+        name: 'commande_detail',
+        requirements: ['id' => '\d+']
+    )]
     public function detail(Commande $commande): Response
     {
         if ($commande->getUtilisateur() !== $this->getUser()) {

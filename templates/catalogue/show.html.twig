@@ -9,12 +9,11 @@
         <!-- IMAGE -->
         <div class="product-detail-image">
             <img
-                class="product-image"
                 src="{{ produit.image
                 ? asset('uploads/' ~ produit.image)
-                : asset('images/default.jpg') }}"
+                : asset('images/produit1.jpg') }}"
                 alt="{{ produit.nom }}"
-                data-fallback='{{ asset('images/default.jpg') }}"
+                data-fallback='{{ asset('images/produit1.jpg') }}'
             >
         </div>
         <div class="add-popup">Ajouté au panier ✔</div>
@@ -60,8 +59,8 @@
             {% endif %}
 
             <!-- RETOUR -->
-            <a href="{{ path('app_produits', {categorie: categorie}) }}"
-               class="back-link">
+            <a href="{{ path('app_produits') }}"
+               class="btn-retour">
                 ← Retour au catalogue
             </a>
 

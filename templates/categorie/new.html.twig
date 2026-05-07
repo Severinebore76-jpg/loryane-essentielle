@@ -1,49 +1,23 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Créer une catégorie{% endblock %}
-
-{% block stylesheets %}
-    {{ parent() }}
-    <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
-{% endblock %}
+{% block title %}Nouvelle catégorie{% endblock %}
 
 {% block body %}
 
-    <section class="admin-container">
+<section class="admin-container">
 
-        <h1 class="admin-title">Créer une catégorie</h1>
-        <p class="admin-subtitle">Ajouter une nouvelle catégorie</p>
+<h1>Créer une catégorie</h1>
 
-        <div class="admin-card">
+    {{ form_start(form) }}
+    {{ form_row(form.nom) }}
+    {{ form_row(form.slug) }}
+    {{ form_row(form.description) }}
 
-            {{ form_start(form) }}
+<button type="submit" class="btn btn-primary">
+Enregistrer
+</button>
 
-            <div class="admin-form-group">
-                {{ form_label(form.nom) }}
-                {{ form_widget(form.nom, { attr: { class: 'input-field' } }) }}
-            </div>
+    {{ form_end(form) }}
 
-            <div class="admin-form-group">
-                {{ form_label(form.description) }}
-                {{ form_widget(form.description, { attr: { class: 'input-field' } }) }}
-            </div>
-
-            <div class="form-actions">
-
-                <button type="submit" class="btn btn-main">
-                    Créer
-                </button>
-
-                <a href="{{ path('categorie_index') }}" class="btn btn-outline">
-                    ← Retour
-                </a>
-
-            </div>
-
-            {{ form_end(form) }}
-
-        </div>
-
-    </section>
-
-{% endblock %}
+</section>
+  {% endblock %}

@@ -79,13 +79,7 @@
 .btn-add-cart:hover {
     opacity: 0.85;
 }
-.back-link {
-    display: inline-block;
-    font-size: 14px;
-    color: #8f4930;
-    text-decoration: none;
-    margin-top: 10px;
-}
+
 .btn-retour {
     display: inline-block;
     margin-bottom: 20px;

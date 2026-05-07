@@ -6,6 +6,7 @@
 
     {% block importmap %} {{ importmap('app') }} {% endblock %}
 
+    <link rel="stylesheet" href="{{ asset('css/variable.css') }}">
     <link rel="stylesheet" href="{{ asset('css/style.css') }}">
     <link rel="stylesheet" href="{{ asset('css/accueil.css') }}">
     <link rel="stylesheet" href="{{ asset('css/admin.css') }}">
@@ -14,7 +15,6 @@
     <link rel="stylesheet" href="{{ asset('css/produit.css') }}">
     <link rel="stylesheet" href="{{ asset('css/panier.css') }}">
     <link rel="stylesheet" href="{{ asset('css/catalogue.css') }}">
-    <link rel="stylesheet" href="{{ asset('css/variable.css') }}">
 </head>
 
 <body>
@@ -22,7 +22,7 @@
 <header class="header">
     <div class="header-container">
 
-        {# 🔥 MENU DYNAMIQUE #}
+        {# MENU DYNAMIQUE #}
         {% set route = app.request.attributes.get('_route') %}
         {% set menu = [] %}
 
@@ -60,7 +60,6 @@
         <div class="header-right">
             <form action="{{ path('app_produits') }}" method="get" class="search-form">
                 <label for="search-input" class="sr-only">
-                    Rechercher
                 </label>
                 <input id="search-input"
                        type="text"
@@ -71,15 +70,15 @@
             </form>
 
             {% if app.user %}
-                <a href="{{ path('app_logout') }}" class="icon">🔓</a>
+                <a href="{{ path('app_logout') }}" class="header-icon">🔓</a>
             {% else %}
-                <a href="{{ path('app_login') }}" class="icon">🔒</a>
+                <a href="{{ path('app_login') }}" class="header-icon">🔒</a>
             {% endif %}
 
             <div class="lang-switch">
-                <span class="lang active">Fr</span>
-                <span class="lang">En</span>
-                <span class="lang">Es</span>
+                <span class="lang-switch-item-active">Fr</span>
+                <span class="lang-switch-item">En</span>
+                <span class="lang-switch-item">Es</span>
             </div>
         </div>
 
@@ -112,8 +111,6 @@
     {% endfor %}
 {% endif %}
 
-<div class="page-background">
-
     <main>
         {% block body %}{% endblock %}
     </main>
@@ -121,13 +118,12 @@
     {% if not is_granted('ROLE_ADMIN') %}
     <footer class="footer">
         <div class="footer-container">
-            <a href="{{ path('app_mentions') }}">Mentions légales</a>
+            <a href="{{ path('app_mentions') }}" >Mentions légales</a>
             <a href="{{ path('app_cgv') }}">CGV</a>
             <a href="{{ path('app_contact') }}">Contact</a>
         </div>
     </footer>
     {% endif %}
-</div>
 
 </body>
 </html>

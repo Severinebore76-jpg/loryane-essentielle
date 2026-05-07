@@ -18,12 +18,11 @@
                         <!-- IMAGE -->
                         <div class="cart-image">
                             <img
-                                class="product-image"
                                 src="{{ item.produit.image
                                 ? asset('uploads/' ~ item.produit.image)
-                                : asset('images/default.jpg') }}"
+                                : asset('images/produit1.jpg') }}"
                                 alt="{{ item.produit.nom }}"
-                                data-fallback="{{ asset('images/default.jpg') }}"                            >
+                                data-fallback="{{ asset('images/produit1.jpg') }}"                            >
                         </div>
 
                         <!-- INFOS -->
@@ -55,13 +54,6 @@
                             {{ ((item.produit.prix * item.quantite))|number_format(2, ',', ' ') }} €
                         </div>
 
-                        <!-- ACTION -->
-                        <div class="cart-actions">
-                            <a href="{{ path('panier_remove', {
-                                id: item.produit.id,
-                                redirect: 'panier'
-                            }) }}" class="cart-remove">🧺</a>
-                        </div>
 
                     </div>
                 {% endfor %}

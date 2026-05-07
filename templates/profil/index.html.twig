@@ -6,7 +6,8 @@
 
     <section class="profile-container">
 
-        <h1 class="cart-title">Mon profil</h1>
+        <!-- TITRE -->
+        <h1 class="profile-title">Mon profil</h1>
 
         <!-- CARD PROFIL -->
         <div class="profile-card">
@@ -28,34 +29,51 @@
 
         </div>
 
-        <!-- CTA -->
-        <div class="cart-footer">
-            <a href="{{ path('app_profil_edit') }}" class="btn-profile">
+        <!-- ACTION PROFIL -->
+        <div class="profile-actions profile-actions-center">
+
+            <a href="{{ path('app_profil_edit') }}"
+               class="btn-profile">
                 Modifier mon profil
             </a>
+
         </div>
 
-        <!-- ESPACE -->
-        <h2 class="cart-title" style="margin-top:50px;">Mon espace</h2>
+        <!-- ESPACE CLIENT -->
+        <h2 class="profile-title">Mon espace</h2>
 
         <div class="account-grid">
 
             <!-- COMMANDES -->
             <div class="account-card">
+
                 <h3>Mes commandes</h3>
-                <p>Suivre et consulter vos achats</p>
-                <a href="{{ path('commande_list') }}" class="btn-account">
+
+                <p>
+                    Suivre et consulter vos achats
+                </p>
+
+                <a href="{{ path('commande_list') }}"
+                   class="btn-account">
                     Voir →
                 </a>
+
             </div>
 
             <!-- ADRESSES -->
             <div class="account-card">
+
                 <h3>Mes adresses</h3>
-                <p>Gérer vos différentes adresses</p>
-                <a href="{{ path('app_adresse') }}" class="btn-account">
+
+                <p>
+                    Gérer vos différentes adresses
+                </p>
+
+                <a href="{{ path('app_adresse') }}"
+                   class="btn-account">
                     Gérer →
                 </a>
+
             </div>
 
         </div>

@@ -49,7 +49,7 @@
 
                         <!-- ACTION -->
                         <div class="cart-actions">
-                            <a href="{{ path('commande_detail', {id: commande.id}) }}">
+                            <a href="{{ path('commande_detail', {id: commande.id}) }}" class="btn-validate">
                                 Voir
                             </a>
 
@@ -62,7 +62,7 @@
 
         {% endif %}
         <a href="{{ path('app_profil') }}" class="btn-retour">
-            ← Retour au profil
+            ← Retour
         </a>
     </section>
 

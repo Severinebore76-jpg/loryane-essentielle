@@ -18,17 +18,12 @@
     <!-- TOOLBAR -->
     <div class="catalog-toolbar">
 
-        <div class="toolbar-left">
             <button id="menu-toggle" class="menu-icon">☰</button>
-        </div>
 
-        <div class="toolbar-center">
-            <button id="filter-toggle" class="btn btn-secondary">
+            <button id="filter-toggle" class="filter-btn">
                 Filtres
             </button>
-        </div>
 
-        <div class="toolbar-right">
             {% if is_granted('ROLE_ADMIN') %}
                 <a href="{{ path('admin_dashboard') }}" class="btn btn-secondary btn-sm">
                     ← Retour admin
@@ -37,7 +32,6 @@
                     Ajouter un produit
                 </a>
             {% endif %}
-        </div>
 
     </div>
 
@@ -63,17 +57,6 @@
 
         <form method="get">
 
-            <label for="categorie">Catégorie</label>
-            <select id="categorie" name="categorie" class="filter-select">
-                <option value="">Toutes</option>
-                {% for categorie in categories %}
-                    <option value="{{ categorie.id }}"
-                            {% if app.request.query.get('categorie') == categorie.id %}selected{% endif %}>
-                        {{ categorie.nom }}
-                    </option>
-                {% endfor %}
-            </select>
-
             <label for="tri">Trier par</label>
             <select id="tri" name="tri" class="filter-select">
                 <option value="">Par défaut</option>
@@ -91,7 +74,7 @@
                 </option>
             </select>
 
-            <button type="submit" class="btn btn-primary">
+            <button type="submit" class=" btn-primary">
                 Appliquer
             </button>
 
@@ -112,7 +95,7 @@
                     <img class="img-fallback"
                          src="{{ produit.image
                          ? asset('uploads/' ~ produit.image)
-                         : asset('images/default.jpg') }}"
+                         : asset('images/produit1.jpg') }}"
                          alt="{{ produit.nom }}">
                 </a>
 

@@ -4,78 +4,79 @@
 
 {% block body %}
 
-    <section class="cart-container">
+    <section class="admin-container">
 
-        <h1 class="cart-title">Modifier le produit</h1>
+        <h1 class="admin-title">
+            Modifier le produit
+        </h1>
 
-        <div class="cart-list">
+        <div class="admin-card">
 
-            <div class="cart-item cart-form">
+            {{ form_start(form) }}
 
-                {{ form_start(form) }}
+            <div class="form-group">
+                {{ form_row(form.nom, {
+                    label_attr: { class: 'form-label' },
+                    attr: { class: 'form-input' }
+                }) }}
+            </div>
 
-                <div class="cart-info">
-                    {{ form_row(form.nom, {
-                        label_attr: { class: 'cart-label' },
-                        attr: { class: 'input-field' }
-                    }) }}
-                </div>
+            <div class="form-group">
+                {{ form_row(form.description, {
+                    label_attr: { class: 'form-label' },
+                    attr: { class: 'form-input' }
+                }) }}
+            </div>
 
-                <div class="cart-info">
-                    {{ form_row(form.description, {
-                        label_attr: { class: 'cart-label' },
-                        attr: { class: 'input-field' }
-                    }) }}
-                </div>
+            <div class="form-group">
+                {{ form_row(form.prix, {
+                    label_attr: { class: 'form-label' },
+                    attr: { class: 'form-input' }
+                }) }}
+            </div>
 
-                <div class="cart-info">
-                    {{ form_row(form.prix, {
-                        label_attr: { class: 'cart-label' },
-                        attr: { class: 'input-field' }
-                    }) }}
-                </div>
+            <div class="form-group">
+                {{ form_row(form.stock, {
+                    label_attr: { class: 'form-label' },
+                    attr: { class: 'form-input' }
+                }) }}
+            </div>
 
-                <div class="cart-info">
-                    {{ form_row(form.stock, {
-                        label_attr: { class: 'cart-label' },
-                        attr: { class: 'input-field' }
-                    }) }}
-                </div>
+            <div class="form-group">
+                {{ form_row(form.image, {
+                    label_attr: { class: 'form-label' },
+                    attr: { class: 'form-input' }
+                }) }}
+            </div>
 
-                <div class="cart-info">
-                    {{ form_row(form.image, {
-                        label_attr: { class: 'cart-label' },
-                        attr: { class: 'input-field' }
-                    }) }}
-                </div>
+            <div class="form-group">
+                {{ form_row(form.categorie, {
+                    label_attr: { class: 'form-label' },
+                    attr: { class: 'form-input' }
+                }) }}
+            </div>
 
-                <div class="cart-info">
-                    {{ form_row(form.categorie, {
-                        label_attr: { class: 'cart-label' }
-                    }) }}
-                </div>
+            <div class="form-group">
+                {{ form_row(form.typePack, {
+                    label_attr: { class: 'form-label' },
+                    attr: { class: 'form-input' }
+                }) }}
+            </div>
 
-                <div class="cart-info">
-                    {{ form_row(form.typePack, {
-                        label_attr: { class: 'cart-label' }
-                    }) }}
-                </div>
+            <div class="form-actions">
 
-                <div class="form-actions">
+                <button type="submit" class="btn btn--primary">
+                    Enregistrer
+                </button>
 
-                    <button type="submit" class="btn-primary">
-                        Enregistrer
-                    </button>
-
-                    <a href="{{ path('app_produits') }}" class="btn-secondary">
-                        ← Retour
-                    </a>
-
-                </div>
-
-                {{ form_end(form) }}
+                <a href="{{ path('app_produits') }}"
+                   class="btn btn--outline">
+                    ← Retour
+                </a>
 
             </div>
+
+            {{ form_end(form) }}
 
         </div>
 

@@ -17,6 +17,16 @@
     color: #8f4930;
     font-size: 15px;
 }
+/* TOOLBAR */
+.catalog-toolbar {
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 0 40px;
+    margin-bottom: 30px;
+}
+
 /* GRID */
 .products-grid {
     padding: 20px 40px;
@@ -119,6 +129,7 @@
     font-size: 11px;
     font-style: italic;
     color: #8f4930;
+    text-align: center;
     opacity: 0.7;
     margin-top: 2px;
 }
@@ -143,6 +154,8 @@
 }
 
 .menu-icon {
+    position: absolute;
+    left: 40px;
     font-size: 24px;
     background: none;
     border: none;
@@ -262,7 +275,6 @@
     background: transparent;
     font-size: 14px;
     width: 100%;
-    appearance: none;
 }
 
 .filter-panel select:hover {
@@ -280,6 +292,15 @@
     cursor: pointer;
     font-size: 14px;
     transition: all 0.2s ease;
+}
+
+.btn-primary {
+    background: #8f4930;
+    color: white;
+    border-radius: 25px;
+    border: none;
+    font-size: 14px;
+    padding: 10px;
 }
 
 .filter-panel .btn-validate:hover {

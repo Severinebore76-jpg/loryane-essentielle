@@ -4,29 +4,65 @@
 
 {% block body %}
 
-    <section class="cart-container">
+    <section class="profile-container">
 
-        <h1 class="cart-title">Ajouter une adresse</h1>
+        <h1 class="address-title">Ajouter une adresse</h1>
 
-        <div class="cart-list">
-            <div class="cart-item" style="flex-direction: column; align-items: flex-start;">
+        <div class="profile-form">
 
-                {{ form_start(form) }}
-                {{ form_widget(form) }}
+            {{ form_start(form) }}
 
-                <button type="submit" class="btn-validate" style="margin-top:20px;">
+            <div class="form-group">
+                {{ form_row(form.numero) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_row(form.typeVoie) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_row(form.nomVoie) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_row(form.ville) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_row(form.codePostal) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_row(form.pays) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_row(form.nom) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_row(form.prenom) }}
+            </div>
+
+            <div class="form-group">
+                {{ form_row(form.type) }}
+            </div>
+
+            <div class="actions">
+
+                <button type="submit" class="btn-profile">
                     Enregistrer
                 </button>
 
-                {{ form_end(form) }}
+                <a href="{{ path('app_adresse') }}"
+                   class="btn-account">
+                    ← Retour
+                </a>
 
             </div>
-        </div>
 
-        <div class="cart-footer">
-            <a href="{{ path('app_adresse') }}" class="btn-validate">
-                ← Retour
-            </a>
+            {{ form_end(form) }}
+
         </div>
 
     </section>

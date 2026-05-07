@@ -91,7 +91,7 @@ final class ProduitController extends AbstractController
         ]);
     }
 
-    #[Route('/produit/new', name: 'produit_new')]
+    #[Route('/admin/produit/new', name: 'produit_new')]
     public function new(Request $request, EntityManagerInterface $em, SluggerInterface $slugger): Response
     {
         $produit = new Produit();
@@ -129,7 +129,7 @@ final class ProduitController extends AbstractController
         ]);
     }
 
-    #[Route('/produit/{id}/edit', name: 'produit_edit')]
+    #[Route('/admin/produit/{id}/edit', name: 'produit_edit')]
     public function edit(Produit $produit, Request $request, EntityManagerInterface $em, SluggerInterface $slugger): Response
     {
         $form = $this->createForm(ProduitType::class, $produit);
@@ -153,7 +153,7 @@ final class ProduitController extends AbstractController
         ]);
     }
 
-    #[Route('/produit/{id}', name: 'produit_delete', methods: ['POST'])]
+    #[Route('/admin/produit/{id}', name: 'produit_delete', methods: ['POST'])]
     public function delete(Request $request, Produit $produit, EntityManagerInterface $em): Response
     {
         if ($this->isCsrfTokenValid('delete'.$produit->getId(), $request->request->get('_token'))) {

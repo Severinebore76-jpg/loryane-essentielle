@@ -1,8 +1,20 @@
 /* =====================================================
    GLOBAL
 ===================================================== */
+html,
+body {
+    height: 100%;
+}
+
 body {
     margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+main {
+    flex: 1;
 }
 /* =====================================================
    HEADER
@@ -12,14 +24,16 @@ body {
     padding: 10px 0;
 }
 .header-container {
-    width: 100%;
-    padding: 10px 10px;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    width: 100%;
+    padding: 10px;
     box-sizing: border-box;
 }
-/* NAVIGATION */
+/* =====================================================
+   NAVIGATION
+===================================================== */
 .nav {
     display: flex;
     gap: 20px;
@@ -28,107 +42,140 @@ body {
     padding: 10px 20px;
     border: 2px solid #8f4930;
     border-radius: 30px;
-    text-decoration: none;
-    color: #8f4930;
-    font-weight: 500;
     background: transparent;
+    color: #8f4930;
+    text-decoration: none;
+    font-weight: 500;
     transition: all 0.3s ease;
 }
 .nav-btn.active {
     background: #8f4930;
     color: white;
 }
-/* HEADER RIGHT */
+/* =====================================================
+   HEADER RIGHT
+===================================================== */
 .header-right {
     display: flex;
     align-items: center;
     gap: 15px;
 }
-.icon {
+.header-icon {
     font-size: 18px;
-    cursor: pointer;
-    text-decoration: none !important;
     color: inherit;
+    text-decoration: none;
+    cursor: pointer;
 }
-/* LANG SWITCH */
+/* =====================================================
+   SEARCH
+===================================================== */
+.search-form {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+.search-input {
+    padding: 6px 10px;
+    border: 1px solid #8f4930;
+    border-radius: 20px;
+    font-size: 13px;
+    outline: none;
+}
+.search-input:focus {
+    border-color: #8f4930;
+}
+.search-btn {
+    padding: 0;
+    border: none;
+    background: none;
+    color: #8f4930;
+    font-size: 16px;
+    cursor: pointer;
+    outline: none;
+}
+/* =====================================================
+   LANGUAGE SWITCH
+===================================================== */
 .lang-switch {
     display: flex;
     gap: 8px;
 }
-.lang {
+.lang-switch-item {
     padding: 5px 10px;
     border: 1px solid #8f4930;
     border-radius: 20px;
-    font-size: 13px;
     color: #8f4930;
+    font-size: 13px;
     cursor: pointer;
 }
-.lang.active {
+
+.lang-switch-item-active {
     background: #8f4930;
     color: white;
+    padding: 5px 10px;
+    border: 1px solid #8f4930;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 13px;
 }
-/* AUTH */
+/* =====================================================
+   AUTH BAR
+===================================================== */
 .auth-bar {
-    text-align: right;
     padding: 10px 40px;
+    text-align: right;
+    color: #8f4930;
     font-size: 14px;
     opacity: 0.8;
-    color: #8f4930;
 }
 .auth-bar a {
     color: #8f4930;
     text-decoration: underline;
     font-weight: 500;
 }
-.search-form {
-    display: flex;
-    align-items: center;
-    gap: 5px;
-}
-
-.search-input {
-    padding: 6px 10px;
-    border-radius: 20px;
-    border: 1px solid #8f4930;
-    font-size: 13px;
-    outline: none;
-}
-.search-btn {
-    background: none;
-    border: none;
-    outline: none;
-    cursor: pointer;
-    font-size: 16px;
-    color: #8f4930;
-    padding: 0;
-}
-.search-input:focus {
-    border-color: #8f4930;
-}
 /* =====================================================
-   CONTACT
+   FLASH MESSAGE
 ===================================================== */
-.btn-profile {
-    outline: none;
-    box-shadow: none;
-    border: none;
+.flash {
+    max-width: 900px;
+    margin: 20px auto;
+    padding: 15px 20px;
+    border-radius: 12px;
+    font-size: 14px;
 }
 
-.btn-profile:focus {
-    box-shadow: none;
-
+/* SUCCESS GLOBAL */
+.flash-success {
+    background: #e8f5e9;
+    color: #2e7d32;
 }
 
+/* ERROR */
+.flash-error {
+    background: #fdecea;
+    color: #c62828;
+}
+
+.flash-order {
+    background: #f4e7e3;
+    color: #8f4930;
+    text-align: center;
+    border-left: 4px solid #8f4930;
+}
 /* =====================================================
    FOOTER
 ===================================================== */
 .footer {
-    margin-top: 60px;
+    margin-top: auto;
     padding: 30px 20px;
     text-align: center;
 }
-
 .footer-container {
+    padding: 8px 14px;
+    border: 1px solid transparent;
+    border-radius: 20px;
+    color: #8f4930;
+    text-decoration: none;
     display: flex;
     justify-content: center;
     gap: 20px;
@@ -138,30 +185,65 @@ body {
 .footer-container a {
     color: #8f4930;
     text-decoration: none;
-    font-size: 14px;
-    padding: 8px 14px;
-    border-radius: 20px;
-    border: 1px solid transparent;
-    transition: all 0.2s ease;
-}
-
-.footer-container a:hover {
-    border-color: #8f4930;
-    background: rgba(143, 73, 48, 0.08);
 }
 
 /* =====================================================
    RESPONSIVE
 ===================================================== */
 @media (max-width: 768px) {
-
-    .nav {
-        flex-wrap: wrap;
-        justify-content: center;
+    /* HEADER */
+    .header-container {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
+        padding: 10px;
     }
-
+    /* NAVIGATION */
+    .nav {
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+    }
     .nav-btn {
         padding: 8px 14px;
         font-size: 14px;
+    }
+    /* HEADER RIGHT */
+    .header-right {
+        flex-direction: column;
+        gap: 8px;
+        width: 100%;
+    }
+    /* SEARCH */
+    .search-form {
+        justify-content: center;
+        width: 100%;
+    }
+    .search-input {
+        width: 100%;
+        max-width: 200px;
+        font-size: 13px;
+    }
+    /* AUTH BAR */
+    .auth-bar {
+        padding: 10px 15px;
+        text-align: center;
+        font-size: 13px;
+    }
+    /* LANG SWITCH */
+    .lang-switch {
+        justify-content: center;
+        flex-wrap: wrap;
+    }
+    /* FOOTER */
+    .footer-container {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+        flex-wrap: wrap;
+    }
+    .footer-container a {
+        color: #8f4930;
+        text-decoration: none;
     }
 }
