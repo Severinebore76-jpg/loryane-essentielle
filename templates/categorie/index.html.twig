@@ -8,16 +8,22 @@
 
         <div class="admin-header">
 
-            <h1 class="admin-title">Catégories</h1>
+            <h1 class="admin-title">
+                Catégories
+            </h1>
 
             <div class="admin-actions">
-                <a href="{{ path('admin_dashboard') }}" class="btn btn-outline">
+
+                <a href="{{ path('admin_dashboard') }}"
+                   class="btn btn-outline">
                     ← Retour admin
                 </a>
 
-                <a href="{{ path('categorie_new') }}" class="btn btn-main">
+                <a href="{{ path('categorie_new') }}"
+                   class="btn btn-main">
                     + Ajouter une catégorie
                 </a>
+
             </div>
 
         </div>
@@ -25,9 +31,12 @@
         <div class="admin-grid">
 
             {% for categorie in categories %}
+
                 <div class="admin-card">
 
-                    <h2>{{ categorie.nom }}</h2>
+                    <h2>
+                        {{ categorie.nom }}
+                    </h2>
 
                     <p class="admin-desc">
                         {{ categorie.description }}
@@ -37,21 +46,24 @@
                         {{ categorie.produits|length }} produit(s)
                     </p>
 
-                    <div class="admin-actions">
+                    <div class="product-actions">
 
                         <a href="{{ path('categorie_edit', {id: categorie.id}) }}"
-                           class="btn btn-outline btn-sm">
+                           class="btn btn-main">
                             Modifier
                         </a>
 
                         <form method="post"
                               action="{{ path('categorie_delete', {id: categorie.id}) }}"
-                              onsubmit="return confirm('Supprimer cette catégorie ?');">
+                              onsubmit="return confirm('Supprimer cette catégorie ?');"
+                              class="inline-form">
 
-                            <input type="hidden" name="_token"
+                            <input type="hidden"
+                                   name="_token"
                                    value="{{ csrf_token('delete' ~ categorie.id) }}">
 
-                            <button class="btn btn-delete btn-sm">
+                            <button type="submit"
+                                    class="btn btn-danger">
                                 Supprimer
                             </button>
 
@@ -60,8 +72,13 @@
                     </div>
 
                 </div>
+
             {% else %}
-                <p>Aucune catégorie</p>
+
+                <p class="admin-empty">
+                    Aucune catégorie
+                </p>
+
             {% endfor %}
 
         </div>

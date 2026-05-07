@@ -24,15 +24,18 @@
                 Filtres
             </button>
 
-            {% if is_granted('ROLE_ADMIN') %}
-                <a href="{{ path('admin_dashboard') }}" class="btn btn-secondary btn-sm">
-                    ← Retour admin
-                </a>
-                <a href="{{ path('produit_new') }}" class="btn btn-primary">
+        {% if is_granted('ROLE_ADMIN') %}
+            <div class="catalog-toolbar-admin">
+                <a href="{{ path('produit_new') }}"
+                   class="btn btn-primary">
                     Ajouter un produit
                 </a>
-            {% endif %}
-
+                <a href="{{ path('admin_dashboard') }}"
+                   class="admin-back-link">
+                    ← Retour admin
+                </a>
+            </div>
+        {% endif %}
     </div>
 
     <!-- MENU PANEL -->
@@ -128,14 +131,18 @@
                             <p class="vat-note">Prix TTC — ajustement au paiement</p>
                         </div>
 
-                        {% if produit.stock > 0 %}
-                            <a href="#"
-                               class="cart-icon add-to-cart"
-                               data-url="{{ path('panier_add', {id: produit.id}) }}">
-                                🧺
-                            </a>
-                        {% else %}
-                            <span class="out-of-stock">Rupture</span>
+                        {% if not is_granted('ROLE_ADMIN') %}
+
+                            {% if produit.stock > 0 %}
+                                <a href="#"
+                                   class="cart-icon add-to-cart"
+                                   data-url="{{ path('panier_add', {id: produit.id}) }}">
+                                    🧺
+                                </a>
+                            {% else %}
+                                <span class="out-of-stock">Rupture</span>
+                            {% endif %}
+
                         {% endif %}
 
                     </div>
